@@ -1,7 +1,7 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
+<script lang="ts">
 
-    </div>
-  </div>
+</script>
+
+<div class="container">
+
 </div>
