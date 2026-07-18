@@ -28,6 +28,11 @@
     /* Links */
     --color-link: var(--color-primary);
     --color-link-hover: var(--color-primary-hover);
+
+    /* Fonts */
+
+    --font-heading: "Playfair Display", serif;
+    --font-body: "Inter", sans-serif;
 }
 
 /* RESET */
@@ -41,7 +46,17 @@
 html,
 body {
     margin: 0;
-    min-width: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
 }
 
 /* GRID */
@@ -205,4 +220,18 @@ body {
     .col-lg-12 {
         grid-column: span 12;
     }
+}
+
+/* UTILS */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
