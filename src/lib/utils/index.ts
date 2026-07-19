@@ -1,2 +1,2 @@
-export * from './truncateWords';
-export * from './generateId';
+export * from './truncate-words';
+export * from './generate-id';
