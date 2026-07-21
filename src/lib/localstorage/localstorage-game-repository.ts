@@ -5,8 +5,10 @@ import { generateId } from '../utils';
 export class LocalStorageGameRepository implements GameRepository {
   private readonly storageKey = 'games';
 
+  constructor(private readonly storage: Storage = localStorage) {}
+
   async getAll(): Promise<GameResponse[]> {
-    const storedGames = localStorage.getItem(this.storageKey);
+    const storedGames = this.storage.getItem(this.storageKey);
 
     if (storedGames === null) {
       return [];
@@ -30,7 +32,7 @@ export class LocalStorageGameRepository implements GameRepository {
     };
 
     games.push(createdGame);
-    localStorage.setItem(this.storageKey, JSON.stringify(games));
+    this.storage.setItem(this.storageKey, JSON.stringify(games));
 
     return createdGame;
   }
