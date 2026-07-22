@@ -2,6 +2,7 @@
 
 import JumboHeader from "./lib/components/JumboHeader.svelte";
 import NewsItem from "./lib/components/NewsItem.svelte";
+import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
 </script>
 
 <div class="container container--main">
@@ -26,7 +27,7 @@ import NewsItem from "./lib/components/NewsItem.svelte";
     <div class="row">
         <main class="col-12 col-lg-6">
             <hr>
-            ALL GAMES
+            <LoadingAnimation></LoadingAnimation>
             <hr>
         </main>
 
