@@ -6,9 +6,24 @@
   import Statistic from './lib/components/Statistic.svelte';
   import Breadcrumb from './lib/components/Breadcrumb.svelte';
   import GameList from './lib/components/GameList.svelte';
+  import { gameRepository, reviewRepository } from './lib/config/repositories';
 
-  import { gameRepository } from './lib/config/repositories';
   const gamesPromise = gameRepository.getAll();
+
+  const reviewsPromise = gamesPromise
+      .then((games) =>
+          Promise.all(
+              games.map((game) =>
+                  reviewRepository.getByGameId(game.id)
+              ),
+          )
+      )
+      .then((reviewsByGame) => reviewsByGame.flat());
+
+  const statisticsPromise = Promise.all([gamesPromise, reviewsPromise]);
+
+
+
 </script>
 
 <div class="container container--main">
@@ -22,8 +37,18 @@
             <Breadcrumb></Breadcrumb>
         </div>
         <div class="col-12 col-md-6">
-            <!-- Await both gamesPromise and reviewPromise and send prop down -->
-            <Statistic></Statistic>
+            {#await statisticsPromise}
+                <p>Loading statistics...</p>
+            {:then [games, reviews]}
+                <Statistic
+                    nrOfGames={games.length}
+                    nrOfReviews={reviews.length}
+                    nrOfUsers={0}
+                />
+            {:catch error}
+                <p>Could not load statistics</p>
+            {/await}
+
         </div>
     </div>
 
