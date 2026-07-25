@@ -40,7 +40,7 @@
 
         <aside class="col-12 col-md-6 col-lg-3">
             <hr>
-            TOP GAMES
+            TOP GAMES (or provide sorting and filtering)
             <hr>
             <hr>
             LATESTREVIEWS
