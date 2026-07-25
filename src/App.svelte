@@ -4,6 +4,7 @@
   import NewsItem from "./lib/components/NewsItem.svelte";
   import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
   import Statistic from './lib/components/Statistic.svelte';
+  import Breadcrumb from './lib/components/Breadcrumb.svelte';
 
   import { gameRepository } from './lib/config/repositories';
   const gamesPromise = gameRepository.getAll();
@@ -17,11 +18,10 @@
     </div>
     <div class="row data-row">
         <div class="col-12 col-md-6">
-            <hr>
-            BREADCRUMB
-            <hr>
+            <Breadcrumb></Breadcrumb>
         </div>
         <div class="col-12 col-md-6">
+            <!-- Await both gamesPromise and reviewPromise and send prop down -->
             <Statistic></Statistic>
         </div>
     </div>
