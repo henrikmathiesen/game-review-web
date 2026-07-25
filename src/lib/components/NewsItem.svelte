@@ -25,8 +25,9 @@
     }
 
     h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
+        font-size: 1.35rem;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
     }
 
     p.news-item__text {

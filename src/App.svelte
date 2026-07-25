@@ -5,6 +5,7 @@
   import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
   import Statistic from './lib/components/Statistic.svelte';
   import Breadcrumb from './lib/components/Breadcrumb.svelte';
+  import GameList from './lib/components/GameList.svelte';
 
   import { gameRepository } from './lib/config/repositories';
   const gamesPromise = gameRepository.getAll();
@@ -31,9 +32,7 @@
             {#await gamesPromise}
                 <LoadingAnimation />
             {:then games}
-                {#each games as game (game.id)}
-                    <p>{game.id}: {game.title}</p>
-                {/each}
+                <GameList {games}></GameList>
             {:catch error}
                 <p>Could not load games</p>
             {/await}
