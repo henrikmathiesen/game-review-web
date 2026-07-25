@@ -3,6 +3,9 @@
 import JumboHeader from "./lib/components/JumboHeader.svelte";
 import NewsItem from "./lib/components/NewsItem.svelte";
 import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
+
+ import { gameRepository } from './lib/config/repositories';
+ const gamesPromise = gameRepository.getAll();
 </script>
 
 <div class="container container--main">
@@ -19,16 +22,22 @@ import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
         </div>
         <div class="col-12 col-md-6">
             <hr>
-            STATISTICS
+                STATISTIK, se comp
             <hr>
         </div>
     </div>
 
     <div class="row">
         <main class="col-12 col-lg-6">
-            <hr>
-            <LoadingAnimation></LoadingAnimation>
-            <hr>
+            {#await gamesPromise}
+                <LoadingAnimation />
+            {:then games}
+                {#each games as game (game.id)}
+                    <p>{game.id}: {game.title}</p>
+                {/each}
+            {:catch error}
+                <p>Could not load games</p>
+            {/await}
         </main>
 
         <aside class="col-12 col-md-6 col-lg-3">
