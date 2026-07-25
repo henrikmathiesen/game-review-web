@@ -2,7 +2,7 @@
     import { truncateWords } from '../utils';
 
     let text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab asperiores aspernatur culpa debitis deserunt doloremque eaque esse eveniet hic illum, nihil quia sequi totam, vitae voluptatem. Eos iure nulla vel!';
-    text = truncateWords(text, 25);
+    text = truncateWords(text, 5);
 </script>
 
 <article class="news-item">

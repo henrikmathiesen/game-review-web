@@ -31,7 +31,7 @@
             <JumboHeader></JumboHeader>
         </div>
     </div>
-    <div class="row data-row">
+    <div class="row spacing-row">
         <div class="col-12 col-md-6">
             <Breadcrumb></Breadcrumb>
         </div>
@@ -62,28 +62,35 @@
             {/await}
         </main>
 
-        <aside class="col-12 col-md-6 col-lg-3">
-            {#await reviewsPromise}
-                <p>Loading reviews...</p>
-            {:then reviews}
-                <ReviewList {reviews} />
-            {:catch error}
-                <p>Could not load reviews</p>
-            {/await}
-        </aside>
-
-        <aside class="col-12 col-md-6 col-lg-3">
-            <NewsItem></NewsItem>
-            <NewsItem></NewsItem>
-            <NewsItem></NewsItem>
-            <NewsItem></NewsItem>
-            <NewsItem></NewsItem>
+        <aside class="col-12 col-lg-6">
+            <div class="row spacing-row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <NewsItem></NewsItem>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <NewsItem></NewsItem>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <NewsItem></NewsItem>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {#await reviewsPromise}
+                        <p>Loading reviews...</p>
+                    {:then reviews}
+                        <ReviewList {reviews} />
+                    {:catch error}
+                        <p>Could not load reviews</p>
+                    {/await}
+                </div>
+            </div>
         </aside>
     </div>
 </div>
 
 <style>
-    .data-row {
+    .spacing-row {
         margin-bottom: 2rem;
     }
 </style>
