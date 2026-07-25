@@ -1,11 +1,12 @@
 <script lang="ts">
 
-import JumboHeader from "./lib/components/JumboHeader.svelte";
-import NewsItem from "./lib/components/NewsItem.svelte";
-import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
+  import JumboHeader from "./lib/components/JumboHeader.svelte";
+  import NewsItem from "./lib/components/NewsItem.svelte";
+  import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
+  import Statistic from './lib/components/Statistic.svelte';
 
- import { gameRepository } from './lib/config/repositories';
- const gamesPromise = gameRepository.getAll();
+  import { gameRepository } from './lib/config/repositories';
+  const gamesPromise = gameRepository.getAll();
 </script>
 
 <div class="container container--main">
@@ -14,16 +15,14 @@ import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
             <JumboHeader></JumboHeader>
         </div>
     </div>
-    <div class="row">
+    <div class="row data-row">
         <div class="col-12 col-md-6">
             <hr>
             BREADCRUMB
             <hr>
         </div>
         <div class="col-12 col-md-6">
-            <hr>
-                STATISTIK, se comp
-            <hr>
+            <Statistic></Statistic>
         </div>
     </div>
 
@@ -58,3 +57,9 @@ import LoadingAnimation from "./lib/components/LoadingAnimation.svelte";
         </aside>
     </div>
 </div>
+
+<style>
+    .data-row {
+        margin-bottom: 2rem;
+    }
+</style>

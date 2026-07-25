@@ -11,6 +11,6 @@
     display: inline-block;
     width: 2em;
     height: 2em;
-    vertical-align: -0.125em;
+    vertical-align: middle;
   }
 </style>
