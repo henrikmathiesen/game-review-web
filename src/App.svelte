@@ -6,6 +6,7 @@
   import Statistic from './lib/components/Statistic.svelte';
   import Breadcrumb from './lib/components/Breadcrumb.svelte';
   import GameList from './lib/components/GameList.svelte';
+  import ReviewList from './lib/components/ReviewList.svelte';
   import { gameRepository, reviewRepository } from './lib/config/repositories';
 
   const gamesPromise = gameRepository.getAll();
@@ -21,8 +22,6 @@
       .then((reviewsByGame) => reviewsByGame.flat());
 
   const statisticsPromise = Promise.all([gamesPromise, reviewsPromise]);
-
-
 
 </script>
 
@@ -64,12 +63,13 @@
         </main>
 
         <aside class="col-12 col-md-6 col-lg-3">
-            <hr>
-            TOP GAMES (or provide sorting and filtering)
-            <hr>
-            <hr>
-            LATESTREVIEWS
-            <hr>
+            {#await reviewsPromise}
+                <p>Loading reviews...</p>
+            {:then reviews}
+                <ReviewList {reviews} />
+            {:catch error}
+                <p>Could not load reviews</p>
+            {/await}
         </aside>
 
         <aside class="col-12 col-md-6 col-lg-3">

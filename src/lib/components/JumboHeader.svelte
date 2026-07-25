@@ -1,6 +1,6 @@
 <header class="jumbo-header">
     <div class="jumbo-header__content">
-        <h1 class="sr-only">Gaming is the Opium</h1>
+        <h1 class="sr-only">Gaming is the Opium - Games and Reviews</h1>
     </div>
 </header>
 
