@@ -33,7 +33,7 @@
                 {game.releaseYear}
             </p>
 
-            <p class="game__description">{truncateWords(game.description, 30)}</p>
+            <p class="game__description">{truncateWords(game.description, 15)}</p>
         </div>
     </article>
 </li>

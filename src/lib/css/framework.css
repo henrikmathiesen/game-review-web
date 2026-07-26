@@ -20,6 +20,11 @@
     --color-primary-hover: #166534;
     --color-primary-text: #ffffff;
 
+    /* Accent / Secondary */
+    --color-accent: #7e22ce;
+    --color-accent-hover: #6b21a8;
+    --color-accent-text: #ffffff;
+
     /* Semantic */
     --color-success: #16a34a;
     --color-warning: #d97706;

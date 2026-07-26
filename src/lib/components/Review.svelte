@@ -68,8 +68,8 @@
         width: 3.25rem;
         min-height: 3.25rem;
         padding: 0.35rem;
-        background-color: var(--color-primary);
-        color: var(--color-primary-text);
+        background-color: var(--color-accent);
+        color: var(--color-accent-text);
         line-height: 1;
     }
 
@@ -97,7 +97,7 @@
     .review__icon {
         display: flex;
         flex-shrink: 0;
-        color: var(--color-primary);
+        color: var(--color-accent);
         font-size: 0.65rem;
     }
 
