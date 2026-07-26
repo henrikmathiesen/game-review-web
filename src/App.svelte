@@ -11,16 +11,17 @@
   import { gameRepository, reviewRepository } from './lib/config/repositories';
 
   const gamesPromise = gameRepository.getAll();
+  const reviewsPromise = reviewRepository.getAll();
 
-  const reviewsPromise = gamesPromise
-      .then((games) =>
-          Promise.all(
-              games.map((game) =>
-                  reviewRepository.getByGameId(game.id)
-              ),
+  const latestReviewsPromise = reviewsPromise.then((reviews) =>
+      [...reviews]
+          .sort(
+              (first, second) =>
+                  Date.parse(second.createdAt) -
+                  Date.parse(first.createdAt),
           )
-      )
-      .then((reviewsByGame) => reviewsByGame.flat());
+          .slice(0, 5)
+  );
 
   const statisticsPromise = Promise.all([gamesPromise, reviewsPromise]);
 
@@ -77,7 +78,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    {#await reviewsPromise}
+                    {#await latestReviewsPromise}
                         <p>Loading reviews...</p>
                     {:then reviews}
                         <ReviewList {reviews} />

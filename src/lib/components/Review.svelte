@@ -24,7 +24,7 @@
             </header>
 
             <p class="review__metadata">
-                <span>Placeholder for Game Title</span>
+                <span>{review.gameTitle}</span>
                 <span aria-hidden="true">&middot;</span>
                 <time datetime={review.createdAt}>
                     {formatDate(review.createdAt)}
