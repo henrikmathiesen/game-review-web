@@ -34,6 +34,9 @@ function createStorage(games: GameResponse[]): Storage {
 
 function createReviewRepository(reviews: ReviewResponse[]): ReviewRepository {
   return {
+    async getAll() {
+      return reviews;
+    },
     async getByGameId(gameId: number) {
       return reviews.filter((review) => review.gameId === gameId);
     },
@@ -62,6 +65,7 @@ function createReview(id: number, rating: number): ReviewResponse {
   return {
     id,
     gameId: 1,
+    gameTitle: `Game Title ${id}`,
     header: `Review ${id}`,
     body: 'Review body',
     rating,

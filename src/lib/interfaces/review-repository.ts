@@ -1,7 +1,8 @@
-import type { ReviewRequest, ReviewResponse } from '../DTO';
+import type { ReviewRequest, ReviewResponse, GameResponse } from '../DTO';
 
 export interface ReviewRepository {
+  getAll(): Promise<ReviewResponse[]>;
   getByGameId(gameId: number): Promise<ReviewResponse[]>;
   getById(id: number): Promise<ReviewResponse | null>;
-  create(gameId: number, review: ReviewRequest): Promise<ReviewResponse>;
+  create(game: Pick<GameResponse, 'id' | 'title'>, review: ReviewRequest): Promise<ReviewResponse>;
 }

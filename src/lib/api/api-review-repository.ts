@@ -1,9 +1,16 @@
-import type { ReviewRequest, ReviewResponse } from '../DTO';
+import type { ReviewRequest, ReviewResponse, GameResponse } from '../DTO';
 import type { ReviewRepository } from '../interfaces';
 import { createJsonRequestOptions } from '../utils';
 
 export class ApiReviewRepository implements ReviewRepository {
   constructor(private url: string) {}
+
+  async getAll(): Promise<ReviewResponse[]> {
+    const response = await fetch(`${this.url}/reviews`);
+    const reviews: ReviewResponse[] = await response.json();
+
+    return reviews;
+  }
 
   async getByGameId(gameId: number): Promise<ReviewResponse[]> {
     const response = await fetch(`${this.url}/games/${gameId}/reviews`);
@@ -19,9 +26,9 @@ export class ApiReviewRepository implements ReviewRepository {
     return review;
   }
 
-  async create(gameId: number, review: ReviewRequest): Promise<ReviewResponse> {
+  async create(game: Pick<GameResponse, 'id' | 'title'>, review: ReviewRequest): Promise<ReviewResponse> {
     const response = await fetch(
-      `${this.url}/games/${gameId}/reviews`,
+      `${this.url}/games/${game.id}/reviews`,
       createJsonRequestOptions('POST', review)
     );
 
