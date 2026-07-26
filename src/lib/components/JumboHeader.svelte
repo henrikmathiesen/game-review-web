@@ -4,7 +4,7 @@
 
 <header class="jumbo-header">
     <div class="jumbo-header__login">
-        <Button semantic="warning" label="Login" />
+        <Button semantic="warning" label="Login" route="/login" />
     </div>
 
     <div class="jumbo-header__content">

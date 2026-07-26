@@ -1,23 +1,44 @@
 <script lang="ts">
-    type ButtonSemantic = 'success' | 'warning' | 'danger';
-    type ButtonType = 'button' | 'submit';
+    import { link } from "svelte-spa-router";
+
+    type ButtonSemantic = "success" | "warning" | "danger";
+    type ButtonType = "button" | "submit";
 
     export let semantic: ButtonSemantic;
     export let label: string;
-    export let buttonType: ButtonType = 'button';
+    export let buttonType: ButtonType = "button";
     export let fullWidth = false;
+    export let route: string | undefined = undefined;
 </script>
 
-<button
-    class={`button button--${semantic}`}
-    class:button--full-width={fullWidth}
-    type={buttonType}
->
-    {label}
-</button>
+{#if route}
+    <a
+        href={route}
+        use:link
+        class={`button button--${semantic}`}
+        class:button--full-width={fullWidth}
+    >
+        {label}
+    </a>
+{:else}
+    <button
+        class={`button button--${semantic}`}
+        class:button--full-width={fullWidth}
+        type={buttonType}
+    >
+        {label}
+    </button>
+{/if}
 
 <style>
     .button {
+        /* Reset link styling when class is used on an a-tag */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        text-decoration: none;
+
         cursor: pointer;
         min-height: 2.75rem;
         padding: 0.625rem 1rem;
