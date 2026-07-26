@@ -8,6 +8,7 @@
   import GameList from './lib/components/GameList.svelte';
   import ReviewList from './lib/components/ReviewList.svelte';
   import Footer from './lib/components/Footer.svelte';
+  import AlienNinja from './lib/components/AlienNinja.svelte';
   import { gameRepository, reviewRepository } from './lib/config/repositories';
 
   const gamesPromise = gameRepository.getAll();
@@ -66,6 +67,17 @@
 
         <aside class="col-12 col-lg-6">
             <div class="row spacing-row">
+                <div class="col-12">
+                    {#await latestReviewsPromise}
+                        <p>Loading reviews...</p>
+                    {:then reviews}
+                        <ReviewList {reviews} />
+                    {:catch error}
+                        <p>Could not load reviews</p>
+                    {/await}
+                </div>
+            </div>
+            <div class="row spacing-row">
                 <div class="col-12 col-md-6 col-lg-4">
                     <NewsItem></NewsItem>
                 </div>
@@ -78,13 +90,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    {#await latestReviewsPromise}
-                        <p>Loading reviews...</p>
-                    {:then reviews}
-                        <ReviewList {reviews} />
-                    {:catch error}
-                        <p>Could not load reviews</p>
-                    {/await}
+                    <AlienNinja></AlienNinja>
                 </div>
             </div>
         </aside>

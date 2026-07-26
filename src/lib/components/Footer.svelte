@@ -1,24 +1,23 @@
-<footer class="sunset-footer">
-    <div class="sunset-footer__content">
-
+<footer class="byline-footer">
+    <div class="byline-footer__content">
+        <div class="byline-footer__content__byline">
+            Henrik Mathiesen & ChatGPT Codex, 2026
+        </div>
+        <hr>
     </div>
 </footer>
 
 <style>
-    .sunset-footer {
-        width: 1168px;
-        height: 200px;
+    .byline-footer {
+        display: flex;
     }
 
-    .sunset-footer__content {
+    .byline-footer__content {
         width: 100%;
-        height: 100%;
+    }
 
-        background-image: url('/sunset-footer.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-
-        overflow: hidden;
+    .byline-footer__content__byline {
+        text-align: right;
+        color: var(--color-text-muted)
     }
 </style>
