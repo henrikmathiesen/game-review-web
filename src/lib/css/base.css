@@ -13,10 +13,6 @@ h6 {
     font-family: var(--font-heading, serif);
 }
 
-.container.container--main {
-    padding-bottom: 1rem;
-}
-
 aside article {
     margin-bottom: 1rem;
 }

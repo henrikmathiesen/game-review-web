@@ -7,6 +7,7 @@
   import Breadcrumb from './lib/components/Breadcrumb.svelte';
   import GameList from './lib/components/GameList.svelte';
   import ReviewList from './lib/components/ReviewList.svelte';
+  import Footer from './lib/components/Footer.svelte';
   import { gameRepository, reviewRepository } from './lib/config/repositories';
 
   const gamesPromise = gameRepository.getAll();
@@ -25,7 +26,7 @@
 
 </script>
 
-<div class="container container--main">
+<div class="container">
     <div class="row">
         <div class="col-12">
             <JumboHeader></JumboHeader>
@@ -51,7 +52,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row spacing-row ">
         <main class="col-12 col-lg-6">
             {#await gamesPromise}
                 <LoadingAnimation />
@@ -87,7 +88,15 @@
             </div>
         </aside>
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <Footer></Footer>
+        </div>
+    </div>
 </div>
+
+
 
 <style>
     .spacing-row {
