@@ -12,3 +12,11 @@ h5,
 h6 {
     font-family: var(--font-heading, serif);
 }
+
+.spacing-row-b {
+    margin-bottom: 2rem;
+}
+
+.spacing-row-t {
+    margin-top: 2rem;
+}

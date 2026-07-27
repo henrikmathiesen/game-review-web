@@ -85,12 +85,4 @@
     .route-content {
         flex: 1;
     }
-
-    .spacing-row-b {
-        margin-bottom: 2rem;
-    }
-
-    .spacing-row-t {
-        margin-top: 2rem;
-    }
 </style>
