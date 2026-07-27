@@ -9,17 +9,17 @@
     <div class="statistics__item">
         <Icon name="game"></Icon>
         <span class="sr-only">Games:</span>
-        { nrOfGames } st
+        { nrOfGames }
     </div>
     <div class="statistics__item">
         <Icon name="review"></Icon>
         <span class="sr-only">Reviews:</span>
-        { nrOfReviews } st
+        { nrOfReviews }
     </div>
     <div class="statistics__item statistics__item--users">
         <Icon name="user"></Icon>
         <span class="sr-only">Users:</span>
-        { nrOfUsers } st
+        { nrOfUsers }
     </div>
 </div>
 
