@@ -7,6 +7,10 @@
     import ReviewList from "../components/ReviewList.svelte";
     import AlienNinja from "../components/AlienNinja.svelte";
     import Pagination from "../components/Pagination.svelte";
+    import GameSorting, {
+        type GameSort,
+    } from "../components/GameSorting.svelte";
+
     import { scrollToId } from "../utils";
 
     type Props = {
@@ -16,17 +20,18 @@
 
     let { gamesPromise, latestReviewsPromise }: Props = $props();
 
+    const pageSize = 10;
     let games = $state<GameResponse[]>([]);
     let currentPage = $state(1);
-    const pageSize = 10;
+    let pageCount = $derived(Math.ceil(games.length / pageSize));
+
+    let activeSort = $state<GameSort>("name");
 
     const resolvedGamesPromise = untrack(() => gamesPromise).then(
         (resolvedGames) => {
             games = resolvedGames;
         },
     );
-
-    let pageCount = $derived(Math.ceil(games.length / pageSize));
 
     let paginatedGames = $derived.by(() => {
         const startIndex = (currentPage - 1) * pageSize;
@@ -39,10 +44,22 @@
         currentPage = page;
         scrollToId("scroll-point-start-main");
     };
+
+    const onSortChange = (sort: GameSort) => {
+        activeSort = sort;
+        currentPage = 1;
+    };
 </script>
 
 <div class="row">
     <main id="scroll-point-start-main" class="col-12 col-lg-6">
+        {#if games.length > 1}
+            <div class="row spacing-row-b">
+                <div class="col-12">
+                    <GameSorting {activeSort} {onSortChange} />
+                </div>
+            </div>
+        {/if}
         <div class="row">
             <div class="col-12">
                 {#await resolvedGamesPromise}
@@ -54,13 +71,13 @@
                 {/await}
             </div>
         </div>
-        <div class="row spacing-row-t">
-            <div class="col-12">
-                {#if pageCount > 1}
+        {#if pageCount > 1}
+            <div class="row spacing-row-t">
+                <div class="col-12">
                     <Pagination {currentPage} {pageCount} {onPageChange} />
-                {/if}
+                </div>
             </div>
-        </div>
+        {/if}
     </main>
 
     <aside class="col-12 col-lg-6">
