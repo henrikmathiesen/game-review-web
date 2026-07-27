@@ -52,7 +52,7 @@
         position: absolute;
         inset-block-start: 50%;
         inset-inline-end: 1rem;
-        color: var(--color-accent);
+        color: var(--color-text-muted);
         content: "▼";
         font-size: 0.75rem;
         pointer-events: none;
@@ -63,9 +63,9 @@
         width: 100%;
         min-height: 2.75rem;
         padding: 0.625rem 2.75rem 0.625rem 0.875rem;
-        border: 1px solid var(--color-accent);
+        border: 1px solid var(--color-border);
         background-color: var(--color-surface);
-        color: var(--color-accent);
+        color: var(--color-text);
         appearance: none;
         font: inherit;
         font-weight: 700;
@@ -78,8 +78,9 @@
     }
 
     .sort-select:hover {
-        border-color: var(--color-accent-hover);
-        color: var(--color-accent-hover);
+        border-color: var(--color-text-muted);
+        background-color: var(--color-background);
+        color: var(--color-text);
     }
 
     .sort-select:focus-visible {

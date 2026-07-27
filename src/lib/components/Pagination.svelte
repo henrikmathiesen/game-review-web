@@ -66,9 +66,9 @@
         min-width: 2.75rem;
         min-height: 2.75rem;
         padding: 0.625rem 0.875rem;
-        border: 1px solid var(--color-accent);
+        border: 1px solid var(--color-border);
         background-color: var(--color-surface);
-        color: var(--color-accent);
+        color: var(--color-text);
         font: inherit;
         font-weight: 700;
         line-height: 1;
@@ -81,9 +81,9 @@
     }
 
     .page-link:hover:not(:disabled) {
-        border-color: var(--color-accent-hover);
-        background-color: var(--color-accent-hover);
-        color: var(--color-accent-text);
+        border-color: var(--color-text-muted);
+        background-color: var(--color-background);
+        color: var(--color-text);
     }
 
     .page-link--step {
@@ -101,14 +101,14 @@
     }
 
     .page-item.active .page-link {
-        border-color: var(--color-accent);
-        background-color: var(--color-accent);
-        color: var(--color-accent-text);
+        border-color: var(--color-text);
+        background-color: var(--color-text);
+        color: var(--color-surface);
     }
 
     .page-item.active .page-link:hover {
-        border-color: var(--color-accent-hover);
-        background-color: var(--color-accent-hover);
+        border-color: var(--color-text-muted);
+        background-color: var(--color-text-muted);
     }
 
     .page-link:disabled {
