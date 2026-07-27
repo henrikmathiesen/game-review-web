@@ -64,7 +64,7 @@
     </main>
 
     <aside class="col-12 col-lg-6">
-        <div class="row spacing-row-b">
+        <div class="row spacing-row-b spacing-row-t-xs-to-md">
             <div class="col-12">
                 {#await latestReviewsPromise}
                     <p>Loading reviews...</p>
