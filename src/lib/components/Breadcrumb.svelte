@@ -1,14 +1,30 @@
+<script module lang="ts">
+    export type BreadcrumbItem = {
+        label: string;
+        href?: string;
+    };
+</script>
+
+<script lang="ts">
+    import { link } from "svelte-spa-router";
+    export let items: BreadcrumbItem[];
+</script>
+
 <nav class="breadcrumb" aria-label="Breadcrumb">
     <ol>
-        <li>
-            <a href="https://svelte.dev/">Home</a>
-        </li>
-        <li>
-            <a href="https://svelte.dev/">Games</a>
-        </li>
-        <li>
-            <a href="https://svelte.dev/" aria-current="page">Current game</a>
-        </li>
+        {#each items as item}
+            <li>
+                {#if item.href}
+                    <a href={item.href} use:link>
+                        {item.label}
+                    </a>
+                {:else}
+                    <span aria-current="page">
+                        {item.label}
+                    </span>
+                {/if}
+            </li>
+        {/each}
     </ol>
 </nav>
 
