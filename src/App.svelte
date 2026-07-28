@@ -3,6 +3,8 @@
     import { wrap } from "svelte-spa-router/wrap";
     import Start from './lib/routes/Start.svelte';
     import Login from './lib/routes/Login.svelte';
+    import GameDetails from './lib/routes/GameDetails.svelte';
+    import ReviewDetails from './lib/routes/ReviewDetails.svelte';
     import JumboHeader from "./lib/components/JumboHeader.svelte";
     import Statistic from "./lib/components/Statistic.svelte";
     import Breadcrumb from "./lib/components/Breadcrumb.svelte";
@@ -34,7 +36,9 @@
                 latestReviewsPromise,
             },
         }),
-        '/login': Login
+        '/login': Login,
+        '/game/:id': GameDetails,
+        '/review/:id': ReviewDetails
     };
 </script>
 

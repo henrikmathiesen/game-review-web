@@ -1,41 +1,46 @@
 <script lang="ts">
-    import type { GameResponse } from '../DTO';
-    import { truncateWords } from '../utils';
-    import Icon from './Icon.svelte';
+    import { link } from "svelte-spa-router";
+    import type { GameResponse } from "../DTO";
+    import { truncateWords } from "../utils";
+    import Icon from "./Icon.svelte";
 
     export let game: GameResponse;
 </script>
 
 <li class="game">
-    <article>
-        <div class="game__icon">
-            <Icon name="game" />
-        </div>
+    <a class="game__link" href={`/game/${game.id}`} use:link>
+        <article>
+            <div class="game__icon">
+                <Icon name="game" />
+            </div>
 
-        <div class="game__content">
-            <header>
-                <h2>{game.title}</h2>
+            <div class="game__content">
+                <header>
+                    <h2>{game.title}</h2>
 
-                <span class="game__rating">
-                    {#if game.averageRating === null}
-                        Not rated
-                    {:else}
-                        {game.averageRating.toFixed(1)} / 10
-                    {/if}
-                </span>
-            </header>
+                    <span class="game__rating">
+                        {#if game.averageRating === null}
+                            Not rated
+                        {:else}
+                            {game.averageRating.toFixed(1)} / 10
+                        {/if}
+                    </span>
+                </header>
 
-            <p class="game__metadata">
-                {game.genre}
-                <span aria-hidden="true">&middot;</span>
-                {game.platform}
-                <span aria-hidden="true">&middot;</span>
-                {game.releaseYear}
-            </p>
+                <p class="game__metadata">
+                    {game.genre}
+                    <span aria-hidden="true">&middot;</span>
+                    {game.platform}
+                    <span aria-hidden="true">&middot;</span>
+                    {game.releaseYear}
+                </p>
 
-            <p class="game__description">{truncateWords(game.description, 15)}</p>
-        </div>
-    </article>
+                <p class="game__description">
+                    {truncateWords(game.description, 15)}
+                </p>
+            </div>
+        </article>
+    </a>
 </li>
 
 <style>
@@ -47,6 +52,18 @@
         border-bottom: 1px solid var(--color-divider);
     }
 
+    /* RESET */
+    .game__link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .game__link:focus-visible {
+        outline: 3px solid var(--color-text);
+        outline-offset: 2px;
+    }
+
     article {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr);
@@ -56,7 +73,7 @@
         transition: background-color 150ms ease-in-out;
     }
 
-    article:hover {
+    .game__link:hover article {
         background-color: var(--color-background);
     }
 

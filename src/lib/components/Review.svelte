@@ -1,41 +1,42 @@
 <script lang="ts">
-    import type { ReviewResponse } from '../DTO';
-    import { truncateWords, formatDate } from '../utils';
-    import Icon from './Icon.svelte';
+    import { link } from "svelte-spa-router";
+    import type { ReviewResponse } from "../DTO";
+    import { truncateWords, formatDate } from "../utils";
+    import Icon from "./Icon.svelte";
 
     export let review: ReviewResponse;
 </script>
 
 <li class="review">
-    <article>
-        <div
-            class="review__rating"
-        >
-            <strong>{review.rating}</strong>
-            <span>/ 10</span>
-        </div>
+    <a class="review__link" href={`/review/${review.id}`} use:link>
+        <article>
+            <div class="review__rating">
+                <strong>{review.rating}</strong>
+                <span>/ 10</span>
+            </div>
 
-        <div class="review__content">
-            <header>
-                <div class="review__icon">
-                    <Icon name="review" />
-                </div>
-                <h3>{review.header}</h3>
-            </header>
+            <div class="review__content">
+                <header>
+                    <div class="review__icon">
+                        <Icon name="review" />
+                    </div>
+                    <h3>{review.header}</h3>
+                </header>
 
-            <p class="review__metadata">
-                <span>{review.gameTitle}</span>
-                <span aria-hidden="true">&middot;</span>
-                <time datetime={review.createdAt}>
-                    {formatDate(review.createdAt)}
-                </time>
-            </p>
+                <p class="review__metadata">
+                    <span>{review.gameTitle}</span>
+                    <span aria-hidden="true">&middot;</span>
+                    <time datetime={review.createdAt}>
+                        {formatDate(review.createdAt)}
+                    </time>
+                </p>
 
-            <p class="review__body">
-                {truncateWords(review.body, 15)}
-            </p>
-        </div>
-    </article>
+                <p class="review__body">
+                    {truncateWords(review.body, 15)}
+                </p>
+            </div>
+        </article>
+    </a>
 </li>
 
 <style>
@@ -47,6 +48,18 @@
         border-bottom: 1px solid var(--color-divider);
     }
 
+    /* RESET */
+    .review__link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .review__link:focus-visible {
+        outline: 3px solid var(--color-text);
+        outline-offset: 2px;
+    }
+
     article {
         display: grid;
         grid-template-columns: 3.25rem minmax(0, 1fr);
@@ -56,7 +69,7 @@
         transition: background-color 150ms ease-in-out;
     }
 
-    article:hover {
+    .review__link:hover article {
         background-color: var(--color-background);
     }
 
