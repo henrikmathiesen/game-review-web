@@ -1,10 +1,5 @@
 <script lang="ts">
     import Router, { type RouteDetailLoaded } from "svelte-spa-router";
-    import { wrap } from "svelte-spa-router/wrap";
-    import Start from "./lib/routes/Start.svelte";
-    import Login from "./lib/routes/Login.svelte";
-    import GameDetails from "./lib/routes/GameDetails.svelte";
-    import ReviewDetails from "./lib/routes/ReviewDetails.svelte";
     import JumboHeader from "./lib/components/JumboHeader.svelte";
     import Statistic from "./lib/components/Statistic.svelte";
     import Breadcrumb, {
@@ -15,6 +10,8 @@
         gameRepository,
         reviewRepository,
     } from "./lib/config/repositories";
+    import { createBreadcrumbItems } from "./lib/config/breadcrumbs";
+    import { createRoutes } from "./lib/config/routes";
 
     const gamesPromise = gameRepository.getAll();
     const reviewsPromise = reviewRepository.getAll();
@@ -30,56 +27,16 @@
 
     const statisticsPromise = Promise.all([gamesPromise, reviewsPromise]);
 
-    const routes = {
-        "/": wrap({
-            component: Start,
-            props: {
-                gamesPromise,
-                latestReviewsPromise,
-            },
-        }),
-        "/login": Login,
-        "/game/:id": GameDetails,
-        "/review/:id": ReviewDetails,
-    };
+    const routes = createRoutes(gamesPromise, latestReviewsPromise);
 
     let breadcrumbItems = $state<BreadcrumbItem[]>([{ label: "Start" }]);
 
     const handleRouteLoaded = async (detail: RouteDetailLoaded) => {
-        switch (detail.route) {
-            case "/login": {
-                breadcrumbItems = [
-                    { label: "Start", href: "/" },
-                    { label: "Login" },
-                ];
-                break;
-            }
-            case "/game/:id": {
-                const id = Number(detail.params?.id);
-                const games = await gamesPromise;
-                const game = games.find((g) => g.id === id);
-
-                breadcrumbItems = [
-                    { label: "Start", href: "/" },
-                    { label: game?.title ?? "Game" },
-                ];
-                break;
-            }
-            case "/review/:id": {
-                const id = Number(detail.params?.id);
-                const reviews = await reviewsPromise;
-                const review = reviews.find((review) => review.id === id);
-
-                breadcrumbItems = [
-                    { label: "Start", href: "/" },
-                    { label: review ? `Review: ${review.gameTitle}` : "Review" }
-                ];
-                break;
-            }
-            default: {
-                breadcrumbItems = [{ label: "Start" }];
-            }
-        }
+        breadcrumbItems = await createBreadcrumbItems(
+            detail,
+            gamesPromise,
+            reviewsPromise,
+        );
     };
 </script>
 
