@@ -29,6 +29,8 @@
                     <time datetime={review.createdAt}>
                         {formatDate(review.createdAt)}
                     </time>
+                    <span aria-hidden="true">&middot;</span>
+                    <span>{review.createdBy}</span>
                 </p>
 
                 <p class="review__body">

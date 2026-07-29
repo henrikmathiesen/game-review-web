@@ -12,6 +12,7 @@ function createReview(id: number): ReviewResponse {
     body: "Review body",
     rating: 5,
     createdAt: "2026-01-01T00:00:00.000Z",
+    createdBy: `User ${id}`
   };
 }
 

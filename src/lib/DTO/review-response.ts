@@ -6,4 +6,5 @@ export type ReviewResponse = {
   body: string;
   rating: number;
   createdAt: string;
+  createdBy: string;
 };
