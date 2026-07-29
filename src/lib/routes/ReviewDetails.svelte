@@ -27,7 +27,7 @@
 
 <style>
     aside {
-        background-color: var(--color-accent);
+        background-color: var(--color-surface);
     }
 </style>
 

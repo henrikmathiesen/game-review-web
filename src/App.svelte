@@ -12,17 +12,13 @@
     } from "./lib/config/repositories";
     import { createBreadcrumbItems } from "./lib/config/breadcrumbs";
     import { createRoutes } from "./lib/config/routes";
+    import { sortReviewsByNewest } from "./lib/utils";
 
     const gamesPromise = gameRepository.getAll();
     const reviewsPromise = reviewRepository.getAll();
 
     const latestReviewsPromise = reviewsPromise.then((reviews) =>
-        [...reviews]
-            .sort(
-                (first, second) =>
-                    Date.parse(second.createdAt) - Date.parse(first.createdAt),
-            )
-            .slice(0, 5),
+        sortReviewsByNewest(reviews).slice(0, 5),
     );
 
     const statisticsPromise = Promise.all([gamesPromise, reviewsPromise]);

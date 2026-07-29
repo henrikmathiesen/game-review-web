@@ -1,7 +1,9 @@
 <script lang="ts">
-    import { gameRepository } from "../config/repositories";
+    import { gameRepository, reviewRepository } from "../config/repositories";
     import Icon from "../components/Icon.svelte";
     import LoadingAnimation from "../components/LoadingAnimation.svelte";
+    import ReviewList from "../components/ReviewList.svelte";
+    import { sortReviewsByNewest } from "../utils";
 
     export let params: {
         id: string;
@@ -10,6 +12,11 @@
     const gameId = Number(params.id);
 
     const gamePromise = gameRepository.getById(gameId);
+    const reviewsPromise = reviewRepository.getByGameId(gameId);
+
+    const sortedReviewsPromise = reviewsPromise.then((reviews) =>
+        sortReviewsByNewest(reviews),
+    );
 </script>
 
 <div class="row">
@@ -94,6 +101,26 @@
                         </section>
                     </div>
                 </article>
+                {#await sortedReviewsPromise}
+                    <LoadingAnimation />
+                {:then reviews}
+                    {#if reviews.length > 0}
+                        <section
+                            class="game-reviews"
+                            aria-labelledby="game-reviews-heading"
+                        >
+                            <h2
+                                id="game-reviews-heading"
+                                class="game-reviews__heading"
+                            >
+                                Reviews
+                            </h2>
+                            <ReviewList {reviews} />
+                        </section>
+                    {/if}
+                {:catch error}
+                    <p>Could not load reviews</p>
+                {/await}
             {:else}
                 <div class="game-details__message">
                     <h2>Game not found</h2>
@@ -109,6 +136,8 @@
     </main>
     <aside class="col-12 col-lg-4"></aside>
 </div>
+
+<!-- TODO better error handling for 404 (api) and null (localstorage) -->
 
 <style>
     .game-details {
@@ -244,7 +273,16 @@
     }
 
     aside {
-        background-color: var(--color-primary);
+        background-color: var(--color-surface);
+    }
+
+    .game-reviews {
+        max-width: inherit;
+        margin-top: 4rem;
+    }
+
+    .game-reviews__heading {
+        margin-bottom: 1rem;
     }
 
     @media (max-width: 479px) {
@@ -272,5 +310,3 @@
         }
     }
 </style>
-
-<!-- TODO better error handling for 404 (api) and null (localstorage) -->
