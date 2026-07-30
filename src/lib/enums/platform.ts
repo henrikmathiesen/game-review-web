@@ -43,6 +43,8 @@ export type Platform = keyof typeof Platform;
     BECAUSE THE PROPERTY NAMES AND VALUES ARE IDENTICAL IN OUR CASE,
     WE CAN STOP HERE.
 
+    import { Platform } from "../enums";
+
     We now have an enum-like object that can be used at runtime:
 
     Platform.PC;

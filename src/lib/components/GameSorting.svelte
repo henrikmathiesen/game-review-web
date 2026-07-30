@@ -1,20 +1,13 @@
-<script module lang="ts">
-    export type GameSort =
-        | 'name'
-        | 'platform'
-        | 'genre'
-        | 'releaseYear'
-        | 'rating';
-</script>
-
 <script lang="ts">
+    import { type GameSort } from '../utils';
+
     type SortOption = {
         value: GameSort;
         label: string;
     };
 
     const sortOptions: SortOption[] = [
-        { value: 'name', label: 'Sort Games by Name' },
+        { value: 'title', label: 'Sort Games by Name' },
         { value: 'platform', label: 'Sort Games by Platform' },
         { value: 'genre', label: 'Sort Games by Genre' },
         { value: 'releaseYear', label: 'Sort Games by Year' },

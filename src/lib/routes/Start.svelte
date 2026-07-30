@@ -7,11 +7,9 @@
     import ReviewList from "../components/ReviewList.svelte";
     import AlienNinja from "../components/AlienNinja.svelte";
     import Pagination from "../components/Pagination.svelte";
-    import GameSorting, {
-        type GameSort,
-    } from "../components/GameSorting.svelte";
+    import GameSorting from "../components/GameSorting.svelte";
 
-    import { scrollToId } from "../utils";
+    import { scrollToId, type GameSort } from "../utils";
 
     type Props = {
         gamesPromise: Promise<GameResponse[]>;
@@ -25,7 +23,7 @@
     let currentPage = $state(1);
     let pageCount = $derived(Math.ceil(games.length / pageSize));
 
-    let activeSort = $state<GameSort>("name");
+    let activeSort = $state<GameSort>("title");
 
     const resolvedGamesPromise = untrack(() => gamesPromise).then(
         (resolvedGames) => {
