@@ -3,6 +3,7 @@
     import Icon from "../components/Icon.svelte";
     import LoadingAnimation from "../components/LoadingAnimation.svelte";
     import ReviewList from "../components/ReviewList.svelte";
+    import GenreImages from "../components/GenreImages.svelte";
     import { sortReviewsByNewest } from "../utils";
 
     export let params: {
@@ -134,7 +135,25 @@
             </div>
         {/await}
     </main>
-    <aside class="col-12 col-lg-4"></aside>
+    <aside class="col-12 col-lg-4">
+        {#await gamePromise}
+            <LoadingAnimation />
+        {:then game}
+            {#if game}
+                <GenreImages genre={game.genre}></GenreImages>
+            {:else}
+                <div class="game-details__message">
+                    <h2>Game not found</h2>
+                    <p>The requested game could not be found.</p>
+                </div>
+            {/if}
+        {:catch error}
+            <div class="game-details__message">
+                <h2>Could not load game</h2>
+                <p>Please try again later.</p>
+            </div>
+        {/await}
+    </aside>
 </div>
 
 <!-- TODO better error handling for 404 (api) and null (localstorage) -->

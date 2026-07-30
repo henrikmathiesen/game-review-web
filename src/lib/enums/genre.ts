@@ -9,4 +9,4 @@ export const Genre = {
     PUZZLE: 'PUZZLE',
 } as const;
 
-export  type Genre = keyof typeof Genre;
+export type Genre = keyof typeof Genre;

@@ -119,7 +119,9 @@
             </div>
         {/await}
     </main>
-    <aside class="col-12 col-lg-4"></aside>
+    <aside class="col-12 col-lg-4">
+
+    </aside>
 </div>
 
 <style>
