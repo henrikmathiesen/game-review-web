@@ -102,26 +102,9 @@
                         </section>
                     </div>
                 </article>
-                {#await sortedReviewsPromise}
-                    <LoadingAnimation />
-                {:then reviews}
-                    {#if reviews.length > 0}
-                        <section
-                            class="game-reviews"
-                            aria-labelledby="game-reviews-heading"
-                        >
-                            <h2
-                                id="game-reviews-heading"
-                                class="game-reviews__heading"
-                            >
-                                Reviews
-                            </h2>
-                            <ReviewList {reviews} />
-                        </section>
-                    {/if}
-                {:catch error}
-                    <p>Could not load reviews</p>
-                {/await}
+                <div class="game-details__images">
+                    <GenreImages genre={game.genre} />
+                </div>
             {:else}
                 <div class="game-details__message">
                     <h2>Game not found</h2>
@@ -136,22 +119,19 @@
         {/await}
     </main>
     <aside class="col-12 col-lg-4">
-        {#await gamePromise}
+        {#await sortedReviewsPromise}
             <LoadingAnimation />
-        {:then game}
-            {#if game}
-                <GenreImages genre={game.genre}></GenreImages>
-            {:else}
-                <div class="game-details__message">
-                    <h2>Game not found</h2>
-                    <p>The requested game could not be found.</p>
-                </div>
+        {:then reviews}
+            {#if reviews.length > 0}
+                <section
+                    class="game-reviews"
+                    aria-label="Game Reviews"
+                >
+                    <ReviewList {reviews} />
+                </section>
             {/if}
         {:catch error}
-            <div class="game-details__message">
-                <h2>Could not load game</h2>
-                <p>Please try again later.</p>
-            </div>
+            <p>Could not load reviews</p>
         {/await}
     </aside>
 </div>
@@ -291,17 +271,23 @@
         color: var(--color-text-muted);
     }
 
+    .game-details__images {
+        margin-top: 2rem;
+    }
+
     aside {
         background-color: var(--color-surface);
     }
 
-    .game-reviews {
-        max-width: inherit;
-        margin-top: 4rem;
+    @media (max-width: 1023px) {
+        aside {
+            margin-top: 1rem;
+        }
     }
 
-    .game-reviews__heading {
-        margin-bottom: 1rem;
+    .game-reviews {
+        max-width: inherit;
+        margin-top: 0;
     }
 
     @media (max-width: 479px) {

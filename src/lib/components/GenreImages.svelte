@@ -8,10 +8,10 @@
 </script>
 
 <div class="row">
-    <div class="col-12 col-md-6 col-lg-12 image-col">
+    <div class="col-12 col-md-6 image-col">
         <img src={imgUrl01} alt={`An image of ${genre.toLowerCase()}`} />
     </div>
-    <div class="col-12 col-md-6 col-lg-12 image-col">
+    <div class="col-12 col-md-6 image-col">
         <img src={imgUrl02} alt={`Another image of ${genre.toLowerCase()}`} />
     </div>
 </div>
