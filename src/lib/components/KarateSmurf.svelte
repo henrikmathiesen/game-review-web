@@ -10,7 +10,7 @@
     }
 
     .karate-smurf__image {
-        width: min(100%, 10rem);
+        width: min(100%, 20rem);
         aspect-ratio: 1 / 1;
     }
 

@@ -27,7 +27,11 @@
 
     let breadcrumbItems = $state<BreadcrumbItem[]>([{ label: "Start" }]);
 
+    let isStartView = $state(true);
+
     const handleRouteLoaded = async (detail: RouteDetailLoaded) => {
+        isStartView = detail.route === "/";
+
         breadcrumbItems = await createBreadcrumbItems(
             detail,
             gamesPromise,
@@ -65,7 +69,11 @@
         <Router {routes} onRouteLoaded={handleRouteLoaded} />
     </div>
 
-    <div class="row spacing-row-t">
+    <div
+        class="row"
+        class:spacing-row-t={isStartView}
+        class:spacing-row-tt={!isStartView}
+    >
         <div class="col-12">
             <Footer></Footer>
         </div>
