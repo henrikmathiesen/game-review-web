@@ -9,7 +9,7 @@
     import Pagination from "../components/Pagination.svelte";
     import GameSorting from "../components/GameSorting.svelte";
 
-    import { scrollToId, type GameSort } from "../utils";
+    import { scrollToId, sortGames, type GameSort } from "../utils";
 
     type Props = {
         gamesPromise: Promise<GameResponse[]>;
@@ -31,11 +31,15 @@
         },
     );
 
+    let sortedGames = $derived.by(() => {
+      return sortGames(games, activeSort);
+    });
+
     let paginatedGames = $derived.by(() => {
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = startIndex + pageSize;
 
-        return games.slice(startIndex, endIndex);
+        return sortedGames.slice(startIndex, endIndex);
     });
 
     const onPageChange = (page: number) => {
