@@ -20,6 +20,10 @@ class AuthState {
     return this.currentUserState?.role === Role.ADMIN;
   }
 
+  get canDeleteGames() {
+    return this.currentUserState?.role === Role.ADMIN;
+  }
+
   get canCreateReviews() {
     return (
       this.currentUserState?.role === Role.ADMIN ||
