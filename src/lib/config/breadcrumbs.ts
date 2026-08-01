@@ -29,6 +29,16 @@ export async function createBreadcrumbItems(
         { label: review ? `Review: ${review.gameTitle}` : "Review" },
       ];
     }
+    case "/game/:id/create-review": {
+      const id = Number(detail.params?.id);
+      const games = await gamesPromise;
+      const game = games.find((g) => g.id === id);
+
+      return [
+        { label: "Start", href: "/" },
+        { label: game ? `Review for: ${game.title}` : "Review for game" },
+      ];
+    }
     default: {
       return [{ label: "Start" }];
     }

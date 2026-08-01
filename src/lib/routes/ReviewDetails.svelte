@@ -146,18 +146,23 @@
                 <LoadingAnimation />
             {:then otherReviews}
             {#if otherReviews && otherReviews.reviews.length > 0 }
-                <h2 class="more-reviews-header">
-                    More reviews by {otherReviews.createdBy}
-                </h2>
-
-                <ReviewList reviews={otherReviews.reviews} showRating={false} />
+                <section class="more-reviews">
+                    <h2 class="more-reviews__header">
+                        More reviews by {otherReviews.createdBy}
+                    </h2>
+                    <ReviewList reviews={otherReviews.reviews} showRating={false} />
+                </section>
             {/if}
             {:catch error}
                 <p>Could not load reviews</p>
             {/await}
         </div>
         <div class="spacing-row-tt">
-            <CreateGameReviews />
+            {#await reviewPromise then review}
+                {#if review}
+                    <CreateGameReviews gameId={review.gameId} />
+                {/if}
+            {/await}
         </div>
     </aside>
 </div>
@@ -329,7 +334,11 @@
         }
     }
 
-    .more-reviews-header {
+    .more-reviews {
+        margin-top: 0;
+    }
+
+    .more-reviews__header {
         padding: 1rem;
         font-size: 1rem;
         text-align: right;

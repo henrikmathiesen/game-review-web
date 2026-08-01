@@ -126,6 +126,9 @@
             {:then reviews}
                 {#if reviews.length > 0}
                     <section class="game-reviews" aria-label="Game Reviews">
+                        <h2 class="game-reviews__header">
+                            Reviews for {reviews[0]?.gameTitle}
+                        </h2>
                         <ReviewList {reviews} />
                     </section>
                 {/if}
@@ -134,7 +137,7 @@
             {/await}
         </div>
         <div class="spacing-row-tt">
-            <CreateGameReviews />
+            <CreateGameReviews {gameId} />
         </div>
     </aside>
 </div>
@@ -291,6 +294,12 @@
     .game-reviews {
         max-width: inherit;
         margin-top: 0;
+    }
+
+    .game-reviews__header {
+        padding: 1rem;
+        font-size: 1rem;
+        text-align: right;
     }
 
     @media (max-width: 479px) {
