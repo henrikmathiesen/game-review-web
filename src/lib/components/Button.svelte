@@ -9,6 +9,7 @@
     export let buttonType: ButtonType = "button";
     export let fullWidth = false;
     export let route: string | undefined = undefined;
+    export let onButtonClick: (() => void) | undefined = undefined;
 </script>
 
 {#if route}
@@ -25,6 +26,7 @@
         class={`button button--${semantic}`}
         class:button--full-width={fullWidth}
         type={buttonType}
+        onclick={onButtonClick}
     >
         {label}
     </button>

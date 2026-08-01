@@ -1,10 +1,18 @@
 <script lang="ts">
     import Button from './Button.svelte';
+    import { authState } from '../auth/auth-state.svelte';
 </script>
 
 <header class="jumbo-header">
     <div class="jumbo-header__login">
-        <Button semantic="success" label="Login" route="/login" />
+        {#if authState.isAuthenticated}
+            <Button semantic="warning"
+                label={`Log out ${authState.currentUser?.username}`}
+                onButtonClick={() => authState.logout()}
+            />
+        {:else}
+            <Button semantic="success" label="Login" route="/login" />
+        {/if}
     </div>
 
     <div class="jumbo-header__content">
