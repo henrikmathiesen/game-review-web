@@ -5,6 +5,7 @@
     import ReviewList from "../components/ReviewList.svelte";
     import GenreImages from "../components/GenreImages.svelte";
     import { sortReviewsByNewest } from "../utils";
+    import CreateGameReviews from "../components/CreateGameReviews.svelte";
 
     export let params: {
         id: string;
@@ -119,20 +120,22 @@
         {/await}
     </main>
     <aside class="col-12 col-lg-4">
-        {#await sortedReviewsPromise}
-            <LoadingAnimation />
-        {:then reviews}
-            {#if reviews.length > 0}
-                <section
-                    class="game-reviews"
-                    aria-label="Game Reviews"
-                >
-                    <ReviewList {reviews} />
-                </section>
-            {/if}
-        {:catch error}
-            <p>Could not load reviews</p>
-        {/await}
+        <div>
+            {#await sortedReviewsPromise}
+                <LoadingAnimation />
+            {:then reviews}
+                {#if reviews.length > 0}
+                    <section class="game-reviews" aria-label="Game Reviews">
+                        <ReviewList {reviews} />
+                    </section>
+                {/if}
+            {:catch error}
+                <p>Could not load reviews</p>
+            {/await}
+        </div>
+        <div class="spacing-row-tt">
+            <CreateGameReviews />
+        </div>
     </aside>
 </div>
 

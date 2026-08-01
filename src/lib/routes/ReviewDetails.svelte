@@ -4,6 +4,7 @@
     import Icon from "../components/Icon.svelte";
     import LoadingAnimation from "../components/LoadingAnimation.svelte";
     import { formatDate } from "../utils";
+    import CreateGameReviews from "../components/CreateGameReviews.svelte";
 
     export let params: {
         id: string;
@@ -120,7 +121,9 @@
         {/await}
     </main>
     <aside class="col-12 col-lg-4">
-
+        <div class="spacing-row-tt">
+            <CreateGameReviews />
+        </div>
     </aside>
 </div>
 
