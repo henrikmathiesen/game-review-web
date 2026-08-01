@@ -3,11 +3,12 @@
     import Review from './Review.svelte';
 
     export let reviews: ReviewResponse[] = [];
+    export let showRating = true;
 </script>
 
 <ul class="review-list">
     {#each reviews as review (review.id)}
-        <Review {review} />
+        <Review {review} {showRating} />
     {/each}
 </ul>
 

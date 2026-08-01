@@ -3,8 +3,9 @@
     import { reviewRepository } from "../config/repositories";
     import Icon from "../components/Icon.svelte";
     import LoadingAnimation from "../components/LoadingAnimation.svelte";
-    import { formatDate } from "../utils";
+    import { formatDate, sortReviewsByNewest } from "../utils";
     import CreateGameReviews from "../components/CreateGameReviews.svelte";
+    import ReviewList from "../components/ReviewList.svelte";
 
     export let params: {
         id: string;
@@ -13,6 +14,29 @@
     const reviewId = Number(params.id);
 
     const reviewPromise = reviewRepository.getById(reviewId);
+    const reviewsPromise = reviewRepository.getAll();
+
+    const otherReviewsByAuthor = Promise.all([
+        reviewPromise,
+        reviewsPromise,
+    ]).then(([review, reviews]) => {
+      if(review === null) {
+        return null;
+      }
+
+      const byUser = reviews.filter((r) => {
+        return r.createdBy === review.createdBy &&
+          r.id !== review.id;
+      });
+
+      const sorted = sortReviewsByNewest(byUser);
+      const sliced = sorted.slice(0,5);
+
+      return {
+        createdBy: review.createdBy,
+        reviews: sliced
+      }
+    });
 </script>
 
 <div class="row">
@@ -44,10 +68,7 @@
                             <div>
                                 <dt>Game</dt>
                                 <dd>
-                                    <a
-                                        href={`/game/${review.gameId}`}
-                                        use:link
-                                    >
+                                    <a href={`/game/${review.gameId}`} use:link>
                                         {review.gameTitle}
                                     </a>
                                 </dd>
@@ -100,9 +121,8 @@
                             <h3>Final thoughts</h3>
                             <p>
                                 Morbi in sem quis dui placerat ornare. Ut
-                                aliquam sollicitudin leo, cras iaculis
-                                ultricies nulla. Donec quis dui at dolor tempor
-                                interdum.
+                                aliquam sollicitudin leo, cras iaculis ultricies
+                                nulla. Donec quis dui at dolor tempor interdum.
                             </p>
                         </section>
                     </div>
@@ -121,11 +141,28 @@
         {/await}
     </main>
     <aside class="col-12 col-lg-4">
+        <div>
+            {#await otherReviewsByAuthor}
+                <LoadingAnimation />
+            {:then otherReviews}
+            {#if otherReviews && otherReviews.reviews.length > 0 }
+                <h2 class="more-reviews-header">
+                    More reviews by {otherReviews.createdBy}
+                </h2>
+
+                <ReviewList reviews={otherReviews.reviews} showRating={false} />
+            {/if}
+            {:catch error}
+                <p>Could not load reviews</p>
+            {/await}
+        </div>
         <div class="spacing-row-tt">
             <CreateGameReviews />
         </div>
     </aside>
 </div>
+
+<!-- TODO better error handling for 404 (api) and null (localstorage) -->
 
 <style>
     .review-details {
@@ -226,7 +263,7 @@
     }
 
     dd a {
-        color: var(--color-accent);
+        color: var(--color-primary);
         text-decoration-thickness: 1px;
         text-underline-offset: 0.2em;
     }
@@ -286,6 +323,18 @@
         background-color: var(--color-surface);
     }
 
+    @media (max-width: 1023px) {
+        aside {
+            margin-top: 1rem;
+        }
+    }
+
+    .more-reviews-header {
+        padding: 1rem;
+        font-size: 1rem;
+        text-align: right;
+    }
+
     @media (max-width: 479px) {
         .review-details__title-row {
             flex-direction: column;
@@ -307,5 +356,3 @@
         }
     }
 </style>
-
-<!-- TODO better error handling for 404 (api) and null (localstorage) -->

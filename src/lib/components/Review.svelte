@@ -5,16 +5,16 @@
     import Icon from "./Icon.svelte";
 
     export let review: ReviewResponse;
+    export let showRating = true;
 </script>
 
-<li class="review">
+<li class="review" class:show-rating={showRating}>
     <a class="review__link" href={`/review/${review.id}`} use:link>
         <article>
             <div class="review__rating">
                 <strong>{review.rating}</strong>
                 <span>/ 10</span>
             </div>
-
             <div class="review__content">
                 <header>
                     <div class="review__icon">
@@ -64,11 +64,15 @@
 
     article {
         display: grid;
-        grid-template-columns: 3.25rem minmax(0, 1fr);
-        gap: 0.75rem;
+        grid-template-columns: minmax(0, 1fr);
         align-items: start;
         padding: 0.875rem;
         transition: background-color 150ms ease-in-out;
+    }
+
+    .show-rating article {
+        grid-template-columns: 3.25rem minmax(0, 1fr);
+        gap: 0.75rem;
     }
 
     .review__link:hover article {
@@ -76,7 +80,7 @@
     }
 
     .review__rating {
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -86,6 +90,10 @@
         background-color: var(--color-accent);
         color: var(--color-accent-text);
         line-height: 1;
+    }
+
+    .show-rating .review__rating {
+        display: flex;
     }
 
     .review__rating strong {
