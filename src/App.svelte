@@ -57,7 +57,7 @@
                 <Statistic
                     nrOfGames={games.length}
                     nrOfReviews={reviews.length}
-                    nrOfUsers={0}
+                    nrOfUsers={2}
                 />
             {:catch error}
                 <p>Could not load statistics</p>

@@ -1,7 +1,36 @@
 <script lang="ts">
+    import { replace } from "svelte-spa-router";
+    import { fade } from "svelte/transition";
     import Banner from "../components/Banner.svelte";
     import Button from "../components/Button.svelte";
     import KarateSmurf from "../components/KarateSmurf.svelte";
+    import { authState } from "../auth/auth-state.svelte";
+    import { Role } from "../enums";
+
+    let username = $state("");
+    let password = $state("");
+    let loginFailed = $state(false);
+
+    const onLoginSubmit = async (event: SubmitEvent) => {
+        event.preventDefault();
+
+        const isAdmin = username === "admin" && password === "admin";
+
+        const isUser = username === "user" && password === "user";
+
+        loginFailed = !isAdmin && !isUser;
+
+        if (loginFailed) {
+            return;
+        }
+
+        authState.login({
+          username,
+          role: isAdmin ? Role.ADMIN : Role.USER
+        });
+
+        await replace("/");
+    };
 </script>
 
 <main class="row">
@@ -32,7 +61,7 @@
         </div>
     </div>
     <div class="col-12 col-md-6">
-        <form class="login-form" onsubmit={(event) => event.preventDefault()}>
+        <form novalidate class="login-form" onsubmit={onLoginSubmit}>
             <header class="login-form__header">
                 <h2>Sign in</h2>
                 <p>Enter one of the demo accounts to continue.</p>
@@ -46,6 +75,8 @@
                     type="text"
                     autocomplete="username"
                     required
+                    bind:value={username}
+                    oninput={() => (loginFailed = false)}
                 />
             </div>
 
@@ -57,6 +88,8 @@
                     type="password"
                     autocomplete="current-password"
                     required
+                    bind:value={password}
+                    oninput={() => (loginFailed = false)}
                 />
             </div>
 
@@ -67,6 +100,15 @@
                 fullWidth
             />
         </form>
+        <div role="alert">
+            {#if loginFailed}
+                <div class="spacing-row-t" out:fade={{ duration: 250 }}>
+                    <Banner semantic="danger" heading="Sign-in failed">
+                        <p>Your username or password was incorrect.</p>
+                    </Banner>
+                </div>
+            {/if}
+        </div>
     </div>
 </main>
 
