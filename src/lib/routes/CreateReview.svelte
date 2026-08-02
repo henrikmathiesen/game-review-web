@@ -1,10 +1,11 @@
 <script lang="ts">
+    import { fade } from "svelte/transition";
     import { push } from "svelte-spa-router";
     import { gameRepository } from "../config/repositories";
     import GameList from "../components/GameList.svelte";
     import LoadingAnimation from "../components/LoadingAnimation.svelte";
-    import KarateSmurf from "../components/KarateSmurf.svelte";
     import Button from "../components/Button.svelte";
+    import Banner from "../components/Banner.svelte";
     import { authState } from "../auth/auth-state.svelte";
     import { type ReviewRequest } from "../DTO";
     import { reviewRepository } from "../config/repositories";
@@ -23,17 +24,15 @@
     let header = $state("");
     let body = $state("");
     let rating = $state<number | undefined>(undefined);
+    let formInvalid = $state(false);
 
     const onReviewSubmit = async (event: SubmitEvent) => {
         event.preventDefault();
 
         const game = await gamePromise;
 
-        if (!game) {
-            return;
-        }
-
-        if (rating === undefined) {
+        if (!header || !body || rating === undefined || !game) {
+            formInvalid = true;
             return;
         }
 
@@ -53,7 +52,6 @@
         );
 
         await push(`/game/${game.id}`);
-
     };
 </script>
 
@@ -70,8 +68,14 @@
                 <p>Could not load games</p>
             {/await}
         </div>
-        <div class="karate-smurf">
-            <KarateSmurf></KarateSmurf>
+        <div role="alert">
+            {#if formInvalid}
+                <div class="spacing-row-t" out:fade={{ duration: 250 }}>
+                    <Banner semantic="danger" heading="Validation Errors">
+                        <p>You need to fill out every field in the form!</p>
+                    </Banner>
+                </div>
+            {/if}
         </div>
     </div>
     <div class="col-12 col-md-6">
@@ -96,8 +100,9 @@
                     name="header"
                     type="text"
                     autocomplete="off"
-                    bind:value={header}
                     required
+                    bind:value={header}
+                    oninput={() => (formInvalid = false)}
                 />
             </div>
 
@@ -107,8 +112,9 @@
                     id="review-body"
                     name="body"
                     rows="9"
+                    required
                     bind:value={body}
-                    required></textarea>
+                    oninput={() => (formInvalid = false)}></textarea>
             </div>
 
             <div class="review-form__field">
@@ -118,6 +124,7 @@
                     name="rating"
                     required
                     bind:value={rating}
+                    oninput={() => (formInvalid = false)}
                 >
                     <option value={undefined}>Choose a rating</option>
                     {#each { length: 10 }, index}
@@ -140,11 +147,6 @@
 <style>
     .game-info {
         background-color: var(--color-surface);
-    }
-
-    .karate-smurf {
-        position: relative;
-        top: 80px;
     }
 
     .review-form {

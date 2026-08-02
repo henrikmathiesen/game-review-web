@@ -14,7 +14,7 @@
         aspect-ratio: 1 / 1;
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 768px) {
         .karate-smurf {
             display: flex;
         }
