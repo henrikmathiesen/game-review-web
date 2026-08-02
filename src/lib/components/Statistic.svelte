@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Icon from './Icon.svelte';
+    import Icon from './graphics/Icon.svelte';
     export let nrOfGames = 0;
     export let nrOfReviews = 0;
     export let nrOfUsers = 0;

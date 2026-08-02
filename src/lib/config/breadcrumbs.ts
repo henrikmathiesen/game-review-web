@@ -1,5 +1,5 @@
 import type { RouteDetailLoaded } from "svelte-spa-router";
-import type { BreadcrumbItem } from "../components/Breadcrumb.svelte";
+import type { BreadcrumbItem } from "../components/shell/Breadcrumb.svelte";
 
 import type { GameResponse, ReviewResponse } from "../DTO";
 

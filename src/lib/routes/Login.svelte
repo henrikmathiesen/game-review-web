@@ -3,7 +3,7 @@
     import { fade } from "svelte/transition";
     import Banner from "../components/Banner.svelte";
     import Button from "../components/Button.svelte";
-    import KarateSmurf from "../components/KarateSmurf.svelte";
+    import KarateSmurf from "../components/graphics/KarateSmurf.svelte";
     import { authState } from "../auth/auth-state.svelte";
     import { Role } from "../enums";
 

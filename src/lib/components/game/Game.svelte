@@ -1,8 +1,8 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
-    import type { GameResponse } from "../DTO";
-    import { truncateWords } from "../utils";
-    import Icon from "./Icon.svelte";
+    import type { GameResponse } from "../../DTO";
+    import { truncateWords } from "../../utils";
+    import Icon from "../graphics/Icon.svelte";
 
     export let game: GameResponse;
 </script>

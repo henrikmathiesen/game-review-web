@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type GameSort } from '../utils';
+    import { type GameSort } from '../../utils';
 
     type SortOption = {
         value: GameSort;

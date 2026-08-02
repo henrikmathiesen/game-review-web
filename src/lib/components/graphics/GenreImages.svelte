@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Genre } from "../enums";
+    import { Genre } from "../../enums";
 
     export let genre: Genre;
 

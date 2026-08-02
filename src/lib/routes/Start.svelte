@@ -2,12 +2,12 @@
     import { untrack } from "svelte";
     import type { GameResponse, ReviewResponse } from "../DTO";
     import NewsItem from "../components/NewsItem.svelte";
-    import LoadingAnimation from "../components/LoadingAnimation.svelte";
-    import GameList from "../components/GameList.svelte";
-    import ReviewList from "../components/ReviewList.svelte";
-    import AlienNinja from "../components/AlienNinja.svelte";
+    import LoadingAnimation from "../components/graphics/LoadingAnimation.svelte";
+    import GameList from "../components/game/GameList.svelte";
+    import ReviewList from "../components/review/ReviewList.svelte";
+    import AlienNinja from "../components/graphics/AlienNinja.svelte";
     import Pagination from "../components/Pagination.svelte";
-    import GameSorting from "../components/GameSorting.svelte";
+    import GameSorting from "../components/game/GameSorting.svelte";
 
     import { scrollToId, sortGames, type GameSort } from "../utils";
 

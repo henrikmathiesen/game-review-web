@@ -1,11 +1,11 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
     import { reviewRepository } from "../config/repositories";
-    import Icon from "../components/Icon.svelte";
-    import LoadingAnimation from "../components/LoadingAnimation.svelte";
+    import Icon from "../components/graphics/Icon.svelte";
+    import LoadingAnimation from "../components/graphics/LoadingAnimation.svelte";
     import { formatDate, sortReviewsByNewest } from "../utils";
-    import CreateGameReviews from "../components/CreateGameReviews.svelte";
-    import ReviewList from "../components/ReviewList.svelte";
+    import CreateGameReviews from "../components/review/CreateGameReviews.svelte";
+    import ReviewList from "../components/review/ReviewList.svelte";
 
     export let params: {
         id: string;

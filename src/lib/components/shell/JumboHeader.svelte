@@ -1,7 +1,7 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
-    import Button from "./Button.svelte";
-    import { authState } from "../auth/auth-state.svelte";
+    import Button from "../Button.svelte";
+    import { authState } from "../../auth/auth-state.svelte";
 </script>
 
 <header class="jumbo-header">

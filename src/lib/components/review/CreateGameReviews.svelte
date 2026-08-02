@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Button from "./Button.svelte";
-    import { authState } from "../auth/auth-state.svelte";
+    import Button from "../Button.svelte";
+    import { authState } from "../../auth/auth-state.svelte";
 
     export let gameId: number;
 </script>

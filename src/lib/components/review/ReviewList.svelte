@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ReviewResponse } from '../DTO';
+    import type { ReviewResponse } from '../../DTO';
     import Review from './Review.svelte';
 
     export let reviews: ReviewResponse[] = [];

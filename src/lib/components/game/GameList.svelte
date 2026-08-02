@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { GameResponse } from '../DTO';
+    import type { GameResponse } from '../../DTO';
     import Game from './Game.svelte';
 
     export let games: GameResponse[] = [];

@@ -1,8 +1,8 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
-    import type { ReviewResponse } from "../DTO";
-    import { truncateWords, formatDate } from "../utils";
-    import Icon from "./Icon.svelte";
+    import type { ReviewResponse } from "../../DTO";
+    import { truncateWords, formatDate } from "../../utils";
+    import Icon from "../graphics/Icon.svelte";
 
     export let review: ReviewResponse;
     export let showRating = true;

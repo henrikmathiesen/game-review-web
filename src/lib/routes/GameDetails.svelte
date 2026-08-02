@@ -1,11 +1,11 @@
 <script lang="ts">
     import { gameRepository, reviewRepository } from "../config/repositories";
-    import Icon from "../components/Icon.svelte";
-    import LoadingAnimation from "../components/LoadingAnimation.svelte";
-    import ReviewList from "../components/ReviewList.svelte";
-    import GenreImages from "../components/GenreImages.svelte";
+    import Icon from "../components/graphics/Icon.svelte";
+    import LoadingAnimation from "../components/graphics/LoadingAnimation.svelte";
+    import ReviewList from "../components/review/ReviewList.svelte";
+    import GenreImages from "../components/graphics/GenreImages.svelte";
     import { sortReviewsByNewest } from "../utils";
-    import CreateGameReviews from "../components/CreateGameReviews.svelte";
+    import CreateGameReviews from "../components/review/CreateGameReviews.svelte";
 
     export let params: {
         id: string;

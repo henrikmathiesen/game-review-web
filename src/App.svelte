@@ -1,11 +1,11 @@
 <script lang="ts">
     import Router, { type RouteDetailLoaded } from "svelte-spa-router";
-    import JumboHeader from "./lib/components/JumboHeader.svelte";
+    import JumboHeader from "./lib/components/shell/JumboHeader.svelte";
     import Statistic from "./lib/components/Statistic.svelte";
     import Breadcrumb, {
         type BreadcrumbItem,
-    } from "./lib/components/Breadcrumb.svelte";
-    import Footer from "./lib/components/Footer.svelte";
+    } from "./lib/components/shell/Breadcrumb.svelte";
+    import Footer from "./lib/components/shell/Footer.svelte";
     import {
         gameRepository,
         reviewRepository,

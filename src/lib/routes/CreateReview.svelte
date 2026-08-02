@@ -2,8 +2,8 @@
     import { fade } from "svelte/transition";
     import { push } from "svelte-spa-router";
     import { gameRepository } from "../config/repositories";
-    import GameList from "../components/GameList.svelte";
-    import LoadingAnimation from "../components/LoadingAnimation.svelte";
+    import GameList from "../components/game/GameList.svelte";
+    import LoadingAnimation from "../components/graphics/LoadingAnimation.svelte";
     import Button from "../components/Button.svelte";
     import Banner from "../components/Banner.svelte";
     import { authState } from "../auth/auth-state.svelte";
