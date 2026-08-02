@@ -36,7 +36,8 @@ export async function createBreadcrumbItems(
 
       return [
         { label: "Start", href: "/" },
-        { label: game ? `Review for: ${game.title}` : "Review for game" },
+        { label: game ? game.title : "Game", href: game ? `/game/${game.id}` : '/' },
+        { label: "Create review" }
       ];
     }
     default: {
