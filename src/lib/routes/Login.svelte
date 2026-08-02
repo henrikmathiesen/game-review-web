@@ -14,9 +14,9 @@
     const onLoginSubmit = async (event: SubmitEvent) => {
         event.preventDefault();
 
-        const isAdmin = username === "admin" && password === "admin";
+        const isAdmin = username === "admin" && password === "hero";
 
-        const isUser = username === "user" && password === "user";
+        const isUser = username === "user" && password === "hero";
 
         loginFailed = !isAdmin && !isUser;
 
@@ -51,9 +51,9 @@
 
             <p>
                 Sign in as an administrator with username <strong>admin</strong>
-                and password <strong>admin</strong>, or as a regular user with
+                and password <strong>hero</strong>, or as a regular user with
                 username
-                <strong>user</strong> and password <strong>user</strong>.
+                <strong>user</strong> and password <strong>hero</strong>.
             </p>
         </Banner>
         <div class="karate-smurf">
@@ -168,8 +168,7 @@
     }
 
     input:focus-visible {
-        border-color: var(--color-primary);
-        outline: 3px solid var(--color-primary);
+        outline: 3px solid var(--color-text);
         outline-offset: 2px;
     }
 
