@@ -1,5 +1,6 @@
 import { wrap } from "svelte-spa-router/wrap";
 import type { GameResponse, ReviewResponse } from "../DTO";
+import { canActivateCreateReview } from "../auth/route-guards";
 import Start from "../routes/Start.svelte";
 import Login from "../routes/Login.svelte";
 import GameDetails from "../routes/GameDetails.svelte";
@@ -21,6 +22,9 @@ export function createRoutes(
     "/login": Login,
     "/game/:id": GameDetails,
     "/review/:id": ReviewDetails,
-    "/game/:id/create-review": CreateReview,
+    "/game/:id/create-review": wrap({
+      component: CreateReview,
+      conditions: [canActivateCreateReview]
+    })
   };
 }

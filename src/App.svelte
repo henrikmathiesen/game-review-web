@@ -66,7 +66,7 @@
     </div>
 
     <div class="route-content">
-        <Router {routes} onRouteLoaded={handleRouteLoaded} />
+        <Router {routes} onRouteLoaded={handleRouteLoaded} restoreScrollState={true} />
     </div>
 
     <div
