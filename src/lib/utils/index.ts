@@ -5,3 +5,4 @@ export * from './format-date';
 export * from './scroll';
 export * from './sort-reviews-by-newest';
 export * from './sort-games';
+export * from './filter-games';

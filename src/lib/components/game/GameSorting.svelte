@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type GameSort } from '../../utils';
+    import { type GameSort } from "../../utils";
 
     type SortOption = {
         value: GameSort;
@@ -7,18 +7,19 @@
     };
 
     const sortOptions: SortOption[] = [
-        { value: 'title', label: 'Sort Games by Name' },
-        { value: 'platform', label: 'Sort Games by Platform' },
-        { value: 'genre', label: 'Sort Games by Genre' },
-        { value: 'releaseYear', label: 'Sort Games by Year' },
-        { value: 'rating', label: 'Sort Games by Rating' },
+        { value: "title", label: "Sort Games by Name" },
+        { value: "platform", label: "Sort Games by Platform" },
+        { value: "genre", label: "Sort Games by Genre" },
+        { value: "releaseYear", label: "Sort Games by Year" },
+        { value: "rating", label: "Sort Games by Rating" },
     ];
 
     export let activeSort: GameSort;
     export let onSortChange: (sort: GameSort) => void;
+    export let isFullWidth = true;
 </script>
 
-<div class="game-sorting">
+<div class="game-sorting" class:game-sorting--max-width={!isFullWidth}>
     <label class="sr-only" for="game-sorting">Sort games</label>
 
     <select
@@ -38,6 +39,9 @@
     .game-sorting {
         position: relative;
         width: 100%;
+    }
+
+    .game-sorting--max-width {
         max-width: 18rem;
     }
 

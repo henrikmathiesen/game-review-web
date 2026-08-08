@@ -6,10 +6,12 @@
     import GameList from "../components/game/GameList.svelte";
     import ReviewList from "../components/review/ReviewList.svelte";
     import AlienNinja from "../components/graphics/AlienNinja.svelte";
+    import QuestionClouds from "../components/graphics/QuestionClouds.svelte";
     import Pagination from "../components/Pagination.svelte";
     import GameSorting from "../components/game/GameSorting.svelte";
+    import GameSearching from "../components/game/GameSearching.svelte";
 
-    import { scrollToId, sortGames, type GameSort } from "../utils";
+    import { scrollToId, sortGames, filterGames, type GameSort } from "../utils";
 
     type Props = {
         gamesPromise: Promise<GameResponse[]>;
@@ -21,9 +23,10 @@
     const pageSize = 10;
     let games = $state<GameResponse[]>([]);
     let currentPage = $state(1);
-    let pageCount = $derived(Math.ceil(games.length / pageSize));
 
     let activeSort = $state<GameSort>("title");
+
+    let searchTerm = $state<string>("");
 
     const resolvedGamesPromise = untrack(() => gamesPromise).then(
         (resolvedGames) => {
@@ -31,8 +34,14 @@
         },
     );
 
+    let filteredGames = $derived.by(() => {
+      return filterGames(games, searchTerm);
+    });
+
+    let pageCount = $derived(Math.ceil(filteredGames.length / pageSize));
+
     let sortedGames = $derived.by(() => {
-      return sortGames(games, activeSort);
+        return sortGames(filteredGames, activeSort);
     });
 
     let paginatedGames = $derived.by(() => {
@@ -51,14 +60,23 @@
         activeSort = sort;
         currentPage = 1;
     };
+
+    const onSearchChange = (term: string) => {
+        searchTerm = term;
+        currentPage = 1;
+    };
 </script>
 
 <div class="row">
     <main id="scroll-point-start-main" class="col-12 col-lg-6">
         {#if games.length > 1}
             <div class="row spacing-row-b">
-                <div class="col-12">
+                <div class="col-6 col-6-custom-breakpoint">
                     <GameSorting {activeSort} {onSortChange} />
+                </div>
+                <div class="col-6 col-6-custom-breakpoint">
+                    <GameSearching {searchTerm} {onSearchChange}
+                    ></GameSearching>
                 </div>
             </div>
         {/if}
@@ -67,7 +85,14 @@
                 {#await resolvedGamesPromise}
                     <LoadingAnimation />
                 {:then}
-                    <GameList games={paginatedGames}></GameList>
+                    {#if paginatedGames.length > 0}
+                        <GameList games={paginatedGames}></GameList>
+                    {:else}
+                        <div class="question-clouds">
+                            <p class="sr-only">No games matched your search.</p>
+                            <QuestionClouds />
+                        </div>
+                    {/if}
                 {:catch error}
                     <p>Could not load games</p>
                 {/await}
@@ -112,3 +137,21 @@
         </div>
     </aside>
 </div>
+
+<style>
+    @media (max-width: 569px) {
+        .col-6-custom-breakpoint {
+            grid-column: span 12;
+        }
+    }
+
+    .question-clouds {
+        margin-top: 0;
+    }
+
+    @media (min-width: 1024px) {
+        .question-clouds {
+            margin-top: 60px;
+        }
+    }
+</style>
