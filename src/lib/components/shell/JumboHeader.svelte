@@ -19,9 +19,7 @@
         </div>
         <div
             class="jumbo-header__login__links"
-            class:spacing-row-t={authState.canCreateGames ||
-                authState.canDeleteGames}
-        >
+            class:spacing-row-t={authState.canCreateGames || authState.canDeleteGames || authState.canDeleteReviews}>
             {#if authState.canCreateGames}
                 <div>
                     <a href="/" use:link>Create Game</a>
@@ -29,7 +27,12 @@
             {/if}
             {#if authState.canDeleteGames}
                 <div>
-                    <a href="/" use:link>Delete Game</a>
+                    <a href="/" use:link>Delete Games</a>
+                </div>
+            {/if}
+            {#if authState.canDeleteReviews}
+                <div>
+                    <a href="/" use:link>Delete Reviews</a>
                 </div>
             {/if}
         </div>

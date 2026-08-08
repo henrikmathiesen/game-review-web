@@ -31,6 +31,10 @@ class AuthState {
     );
   }
 
+  get canDeleteReviews() {
+    return this.currentUserState?.role === Role.ADMIN;
+  }
+
   login(user: AuthUser) {
     this.currentUserState = user;
   }
