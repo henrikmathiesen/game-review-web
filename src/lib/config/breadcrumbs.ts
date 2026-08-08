@@ -40,6 +40,12 @@ export async function createBreadcrumbItems(
         { label: "Create review" }
       ];
     }
+    case "/create-game": {
+      return [
+        { label: "Start", href: "/" },
+        { label: "Create game" }
+      ];
+    }
     default: {
       return [{ label: "Start" }];
     }

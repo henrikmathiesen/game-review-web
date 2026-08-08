@@ -22,7 +22,7 @@
             class:spacing-row-t={authState.canCreateGames || authState.canDeleteGames || authState.canDeleteReviews}>
             {#if authState.canCreateGames}
                 <div>
-                    <a href="/" use:link>Create Game</a>
+                    <a href="/create-game" use:link>Create Game</a>
                 </div>
             {/if}
             {#if authState.canDeleteGames}
