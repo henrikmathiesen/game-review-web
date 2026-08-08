@@ -27,12 +27,12 @@
             {/if}
             {#if authState.canDeleteGames}
                 <div>
-                    <a href="/" use:link>Delete Games</a>
+                    <a href="/delete-games" use:link>Delete Games</a>
                 </div>
             {/if}
             {#if authState.canDeleteReviews}
                 <div>
-                    <a href="/" use:link>Delete Reviews</a>
+                    <a href="/delete-reviews" use:link>Delete Reviews</a>
                 </div>
             {/if}
         </div>

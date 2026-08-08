@@ -19,3 +19,21 @@ export const canActivateCreateGame: RoutePrecondition = async () => {
   await replace("/login");
   return false;
 };
+
+export const canActivateDeleteReviews: RoutePrecondition = async () => {
+  if (authState.canDeleteReviews) {
+    return true;
+  }
+
+  await replace("/login");
+  return false;
+};
+
+export const canActivateDeleteGames: RoutePrecondition = async () => {
+  if (authState.canDeleteGames) {
+    return true;
+  }
+
+  await replace("/login");
+  return false;
+};

@@ -1,12 +1,19 @@
 import { wrap } from "svelte-spa-router/wrap";
 import type { GameResponse, ReviewResponse } from "../DTO";
-import { canActivateCreateReview, canActivateCreateGame } from "../auth/route-guards";
+import {
+  canActivateCreateReview,
+  canActivateCreateGame,
+  canActivateDeleteReviews,
+  canActivateDeleteGames,
+} from "../auth/route-guards";
 import Start from "../routes/Start.svelte";
 import Login from "../routes/Login.svelte";
 import GameDetails from "../routes/GameDetails.svelte";
 import ReviewDetails from "../routes/ReviewDetails.svelte";
 import CreateReview from "../routes/CreateReview.svelte";
 import CreateGame from "../routes/CreateGame.svelte";
+import DeleteGames from "../routes/DeleteGames.svelte";
+import DeleteReviews from "../routes/DeleteReviews.svelte";
 
 export function createRoutes(
   gamesPromise: Promise<GameResponse[]>,
@@ -30,6 +37,14 @@ export function createRoutes(
     "/create-game": wrap({
       component: CreateGame,
       conditions: [canActivateCreateGame],
-    })
+    }),
+    "/delete-reviews": wrap({
+      component: DeleteReviews,
+      conditions: [canActivateDeleteReviews],
+    }),
+    "/delete-games": wrap({
+      component: DeleteGames,
+      conditions: [canActivateDeleteGames],
+    }),
   };
 }

@@ -46,6 +46,18 @@ export async function createBreadcrumbItems(
         { label: "Create game" }
       ];
     }
+    case "/delete-reviews": {
+      return [
+        { label: "Start", href: "/" },
+        { label: "Delete reviews" }
+      ];
+    }
+    case "/delete-games": {
+      return [
+        { label: "Start", href: "/" },
+        { label: "Delete games" }
+      ];
+    }
     default: {
       return [{ label: "Start" }];
     }
