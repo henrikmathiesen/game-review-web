@@ -4,11 +4,20 @@
 
     export let reviews: ReviewResponse[] = [];
     export let showRating = true;
+    export let selectable = false;
+    export let selectedIds: number[] = [];
+    export let onSelectionChange: ((id: number, selected: boolean) => void) | undefined = undefined;
 </script>
 
 <ul class="review-list">
     {#each reviews as review (review.id)}
-        <Review {review} {showRating} />
+        <Review
+            {review}
+            {showRating}
+            {selectable}
+            selected={selectedIds.includes(review.id)}
+            {onSelectionChange}
+        />
     {/each}
 </ul>
 

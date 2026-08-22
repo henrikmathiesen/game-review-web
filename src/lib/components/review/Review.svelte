@@ -4,42 +4,85 @@
     import { truncateWords, formatDate } from "../../utils";
     import Icon from "../graphics/Icon.svelte";
 
-    export let review: ReviewResponse;
-    export let showRating = true;
+    type Props = {
+        review: ReviewResponse;
+        showRating?: boolean;
+        selectable?: boolean;
+        selected?: boolean;
+        onSelectionChange?: (id: number, selected: boolean) => void;
+    };
+
+    let {
+        review,
+        showRating = true,
+        selectable = false,
+        selected = false,
+        onSelectionChange,
+    }: Props = $props();
 </script>
 
 <li class="review" class:show-rating={showRating}>
-    <a class="review__link" href={`/review/${review.id}`} use:link>
-        <article>
-            <div class="review__rating">
-                <strong>{review.rating}</strong>
-                <span>/ 10</span>
-            </div>
-            <div class="review__content">
-                <header>
-                    <div class="review__icon">
-                        <Icon name="review" />
-                    </div>
-                    <h3>{review.header}</h3>
-                </header>
+    {#if selectable}
+        <div class="review__selectable">
+            <input
+                type="checkbox"
+                id={`review-${review.id}`}
+                class="sr-only"
+                checked={selected}
+                onchange={(event) => {
+                    onSelectionChange?.(
+                        review.id,
+                        event.currentTarget.checked,
+                    );
+                }}
+            />
 
-                <p class="review__metadata">
-                    <span>{review.gameTitle}</span>
-                    <span aria-hidden="true">&middot;</span>
-                    <time datetime={review.createdAt}>
-                        {formatDate(review.createdAt)}
-                    </time>
-                    <span aria-hidden="true">&middot;</span>
-                    <span>{review.createdBy}</span>
-                </p>
+            {@render reviewContent()}
 
-                <p class="review__body">
-                    {truncateWords(review.body, 15)}
-                </p>
-            </div>
-        </article>
-    </a>
+            <label
+                class="review__selection-overlay"
+                for={`review-${review.id}`}
+            >
+                <span class="sr-only">Select {review.header}</span>
+            </label>
+        </div>
+    {:else}
+        <a class="review__link" href={`/review/${review.id}`} use:link>
+            {@render reviewContent()}
+        </a>
+    {/if}
 </li>
+
+{#snippet reviewContent()}
+    <article>
+        <div class="review__rating">
+            <strong>{review.rating}</strong>
+            <span>/ 10</span>
+        </div>
+        <div class="review__content">
+            <header>
+                <div class="review__icon">
+                    <Icon name="review" />
+                </div>
+                <h3>{review.header}</h3>
+            </header>
+
+            <p class="review__metadata">
+                <span>{review.gameTitle}</span>
+                <span aria-hidden="true">&middot;</span>
+                <time datetime={review.createdAt}>
+                    {formatDate(review.createdAt)}
+                </time>
+                <span aria-hidden="true">&middot;</span>
+                <span>{review.createdBy}</span>
+            </p>
+
+            <p class="review__body">
+                {truncateWords(review.body, 15)}
+            </p>
+        </div>
+    </article>
+{/snippet}
 
 <style>
     .review {
@@ -62,6 +105,54 @@
         outline-offset: 2px;
     }
 
+    .review__selectable {
+        position: relative;
+    }
+
+    .review__selectable article {
+        padding-right: 3.75rem;
+    }
+
+    .review__selection-overlay {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        cursor: pointer;
+    }
+
+    .review__selection-overlay::after {
+        position: absolute;
+        top: 0.875rem;
+        right: 0.875rem;
+        display: grid;
+        width: 1.4rem;
+        height: 1.4rem;
+        border: 2px solid var(--color-warning);
+        background-color: var(--color-surface);
+        content: "";
+        place-items: center;
+        color: var(--color-primary-text);
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .review__selectable input:checked ~ article {
+        background-color: var(--color-background);
+        box-shadow: inset 4px 0 0 var(--color-warning);
+    }
+
+    .review__selectable input:checked ~ .review__selection-overlay::after {
+        border-color: var(--color-warning);
+        background-color: var(--color-warning);
+        content: "\2713";
+    }
+
+    .review__selectable input:focus-visible ~ article {
+        outline: 3px solid var(--color-text);
+        outline-offset: 2px;
+    }
+
     article {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
@@ -75,7 +166,8 @@
         gap: 0.75rem;
     }
 
-    .review__link:hover article {
+    .review__link:hover article,
+    .review__selectable:hover article {
         background-color: var(--color-background);
     }
 
