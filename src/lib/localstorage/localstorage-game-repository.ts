@@ -45,9 +45,22 @@ export class LocalStorageGameRepository implements GameRepository {
 
   async deleteById(id: number): Promise<void> {
     let games = await this.getAll();
-    const withoutDeletedGame = games.filter(v => v.id !== id);
 
+    //
+    // First delete all reviews associated with this game
+
+    const reviews = await this.reviewRepository.getByGameId(id);
+
+    for (const review of reviews) {
+      await this.reviewRepository.deleteById(review.id);
+    }
+
+    //
+    // Then delete the game
+
+    const withoutDeletedGame = games.filter((v) => v.id !== id);
     games = withoutDeletedGame;
+
     this.storage.setItem(this.storageKey, JSON.stringify(games));
   }
 

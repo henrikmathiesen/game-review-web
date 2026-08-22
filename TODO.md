@@ -24,4 +24,6 @@
 
 - Add the remaining CRUD operations when required.
 - Add pagination improvements for larger collections where needed.
+- Test the production/localStorage repository path end to end, including create, delete, cascade deletion of game reviews, list refreshes, and persistence across a browser reload.
 - Hold a project review and knowledge quiz when the application is considered complete.
+- Include a focused knowledge quiz on promises and `async`/`await`, especially promise return values, `Promise.all()`, and parallel versus sequential asynchronous operations.
