@@ -26,4 +26,8 @@ export class ApiGameRepository implements GameRepository {
 
     return createdGame;
   }
+
+  async deleteById(id: number): Promise<void> {
+    await fetch(`${this.url}/games/${id}`, { method: 'DELETE' });
+  }
 }

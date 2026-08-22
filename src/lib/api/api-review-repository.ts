@@ -36,4 +36,8 @@ export class ApiReviewRepository implements ReviewRepository {
 
     return createdReview;
   }
+
+  async deleteById(id: number): Promise<void> {
+    await fetch(`${this.url}/reviews/${id}`, { method: 'DELETE' });
+  }
 }

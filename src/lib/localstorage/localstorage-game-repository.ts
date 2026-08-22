@@ -43,6 +43,14 @@ export class LocalStorageGameRepository implements GameRepository {
     return createdGame;
   }
 
+  async deleteById(id: number): Promise<void> {
+    let games = await this.getAll();
+    const withoutDeletedGame = games.filter(v => v.id !== id);
+
+    games = withoutDeletedGame;
+    this.storage.setItem(this.storageKey, JSON.stringify(games));
+  }
+
   private async calculateAverageRatings(games: GameResponse[]): Promise<void> {
     for (const game of games) {
       const reviews = await this.reviewRepository.getByGameId(game.id);

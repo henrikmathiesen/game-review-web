@@ -18,15 +18,9 @@ export class LocalStorageReviewRepository implements ReviewRepository {
   }
 
   async getByGameId(gameId: number): Promise<ReviewResponse[]> {
-    const storedReviews = this.storage.getItem(this.storageKey);
+    const reviews = await this.getAll();
 
-    if (storedReviews === null) {
-      return [];
-    }
-
-    const parsedReviews = JSON.parse(storedReviews) as ReviewResponse[];
-
-    return parsedReviews.filter((review) => review.gameId === gameId);
+    return reviews.filter((review) => review.gameId === gameId);
   }
 
   async getById(id: number): Promise<ReviewResponse | null> {
@@ -38,27 +32,28 @@ export class LocalStorageReviewRepository implements ReviewRepository {
     // Unlike the Java backend, this demo adapter assumes that
     // the provided game reference is valid.
 
-    const storedReviews = this.storage.getItem(this.storageKey);
-    let parsedReviews: ReviewResponse[];
-
-    if (storedReviews === null) {
-      parsedReviews = [];
-    } else {
-      parsedReviews = JSON.parse(storedReviews) as ReviewResponse[];
-    }
+    const reviews = await this.getAll();
 
     const createdReview: ReviewResponse = {
       ...review,
-      id: generateId(parsedReviews),
+      id: generateId(reviews),
       gameId: game.id,
       gameTitle: game.title,
       createdAt: new Date().toISOString()
     };
 
-    parsedReviews.push(createdReview);
+    reviews.push(createdReview);
 
-    this.storage.setItem(this.storageKey, JSON.stringify(parsedReviews));
+    this.storage.setItem(this.storageKey, JSON.stringify(reviews));
 
     return createdReview;
+  }
+
+  async deleteById(id: number): Promise<void> {
+    let reviews = await this.getAll();
+    const withoutDeletedReview = reviews.filter(v => v.id !== id);
+
+    reviews = withoutDeletedReview;
+    this.storage.setItem(this.storageKey, JSON.stringify(reviews));
   }
 }

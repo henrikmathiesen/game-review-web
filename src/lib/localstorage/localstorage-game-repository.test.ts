@@ -45,6 +45,9 @@ function createReviewRepository(reviews: ReviewResponse[]): ReviewRepository {
     },
     async create() {
       throw new Error('Not implemented in this test');
+    },
+    async deleteById(id) {
+      throw new Error('Not implemented in this test');
     }
   };
 }
