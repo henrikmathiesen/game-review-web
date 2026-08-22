@@ -6,10 +6,23 @@
     import Button from "../components/Button.svelte";
 
     const gamesPromise = gameRepository.getAll();
+
+    let selectedIds: number[] = $state([]);
+
+    const onSelectionChange = (id: number, selected: boolean) => {
+      let temp = selectedIds.filter(v => v !== id);
+      selected && temp.push(id);
+
+      selectedIds = temp;
+    }
+
+    const onDeleteGamesSubmit = (event: SubmitEvent) => {
+      event.preventDefault();
+    }
 </script>
 
 <main>
-    <form class="row">
+    <form class="row" novalidate onsubmit={onDeleteGamesSubmit}>
         <div class="col-12 col-md-6">
             <Banner semantic="warning" heading="Important">
                 <p>
@@ -25,7 +38,7 @@
             {#await gamesPromise}
                 <LoadingAnimation />
             {:then games}
-                <GameList games={games}></GameList>
+                <GameList games={games} selectable={true} {selectedIds} {onSelectionChange}></GameList>
             {:catch error}
                 <p>Could not load games</p>
             {/await}

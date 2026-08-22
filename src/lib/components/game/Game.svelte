@@ -4,44 +4,80 @@
     import { truncateWords } from "../../utils";
     import Icon from "../graphics/Icon.svelte";
 
-    export let game: GameResponse;
+    type Props = {
+        game: GameResponse;
+        selectable?: boolean;
+        selected?: boolean;
+        onSelectionChange?: (id: number, selected: boolean) => void;
+    };
+
+    let {
+        game,
+        selectable = false,
+        selected = false,
+        onSelectionChange,
+    }: Props = $props();
 </script>
 
 <li class="game">
-    <a class="game__link" href={`/game/${game.id}`} use:link>
-        <article>
-            <div class="game__icon">
-                <Icon name="game" />
-            </div>
+    {#if selectable}
+        <div class="game__selectable">
+            <input
+                type="checkbox"
+                id={`game-${game.id}`}
+                class="sr-only"
+                checked={selected}
+                onchange={(e) => {
+                    onSelectionChange &&
+                        onSelectionChange(game.id, e.currentTarget.checked);
+                }}
+            />
+            {@render gameContent()}
 
-            <div class="game__content">
-                <header>
-                    <h2>{game.title}</h2>
-
-                    <span class="game__rating">
-                        {#if game.averageRating === null}
-                            Not rated
-                        {:else}
-                            {game.averageRating.toFixed(1)} / 10
-                        {/if}
-                    </span>
-                </header>
-
-                <p class="game__metadata">
-                    {game.genre}
-                    <span aria-hidden="true">&middot;</span>
-                    {game.platform}
-                    <span aria-hidden="true">&middot;</span>
-                    {game.releaseYear}
-                </p>
-
-                <p class="game__description">
-                    {truncateWords(game.description, 15)}
-                </p>
-            </div>
-        </article>
-    </a>
+            <label class="game__selection-overlay" for={`game-${game.id}`}>
+                <span class="sr-only">Select {game.title}</span>
+            </label>
+        </div>
+    {:else}
+        <a class="game__link" href={`/game/${game.id}`} use:link>
+            {@render gameContent()}
+        </a>
+    {/if}
 </li>
+
+{#snippet gameContent()}
+    <article>
+        <div class="game__icon">
+            <Icon name="game" />
+        </div>
+
+        <div class="game__content">
+            <header>
+                <h2>{game.title}</h2>
+
+                <span class="game__rating">
+                    {#if game.averageRating === null}
+                        Not rated
+                    {:else}
+                        {game.averageRating.toFixed(1)} / 10
+                    {/if}
+                </span>
+            </header>
+
+            <p class="game__metadata">
+                {game.genre}
+                <span aria-hidden="true">&middot;</span>
+                {game.platform}
+                <span aria-hidden="true">&middot;</span>
+                {game.releaseYear}
+            </p>
+
+            <p class="game__description">
+                {truncateWords(game.description, 15)}
+            </p>
+        </div>
+    </article>
+{/snippet}
 
 <style>
     .game {
@@ -64,6 +100,54 @@
         outline-offset: 2px;
     }
 
+    .game__selectable {
+        position: relative;
+    }
+
+    .game__selectable article {
+        padding-right: 3.75rem;
+    }
+
+    .game__selection-overlay {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        cursor: pointer;
+    }
+
+    .game__selection-overlay::after {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: grid;
+        width: 1.4rem;
+        height: 1.4rem;
+        border: 2px solid var(--color-warning);
+        background-color: var(--color-surface);
+        content: "";
+        place-items: center;
+        color: var(--color-primary-text);
+        font-size: 0.9rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .game__selectable input:checked ~ article {
+        background-color: var(--color-background);
+        box-shadow: inset 4px 0 0 var(--color-warning);
+    }
+
+    .game__selectable input:checked ~ .game__selection-overlay::after {
+        border-color: var(--color-warning);
+        background-color: var(--color-warning);
+        content: "\2713";
+    }
+
+    .game__selectable input:focus-visible ~ article {
+        outline: 3px solid var(--color-text);
+        outline-offset: 2px;
+    }
+
     article {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr);
@@ -73,7 +157,8 @@
         transition: background-color 150ms ease-in-out;
     }
 
-    .game__link:hover article {
+    .game__link:hover article,
+    .game__selectable:hover article {
         background-color: var(--color-background);
     }
 
